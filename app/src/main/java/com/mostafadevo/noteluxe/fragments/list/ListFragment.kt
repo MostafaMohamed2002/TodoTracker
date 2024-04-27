@@ -1,16 +1,13 @@
-package com.mostafadevo.noteluxe
+package com.mostafadevo.noteluxe.fragments.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mostafadevo.noteluxe.R
 
-
-class updateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class listFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +19,7 @@ class updateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update, container, false)
+        return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
 }

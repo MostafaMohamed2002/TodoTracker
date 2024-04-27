@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.mostafadevo.noteluxe.listFragment"
+        android:name="com.mostafadevo.noteluxe.fragments.list.listFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.mostafadevo.noteluxe.addFragment"
+        android:name="com.mostafadevo.noteluxe.fragments.add.addFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.mostafadevo.noteluxe.updateFragment"
+        android:name="com.mostafadevo.noteluxe.fragments.update.updateFragment"
         android:label="fragment_update"
         tools:layout="@layout/fragment_update" >
         <action
