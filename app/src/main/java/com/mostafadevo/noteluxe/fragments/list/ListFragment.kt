@@ -22,7 +22,25 @@ class listFragment : Fragment() {
     ): View? {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        _binding.floatingActionButton.setOnClickListener {
+        _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val data = ArrayList<String>()
+        data.add("Note 1")
+        data.add("Note 2")
+        data.add("Note 3")
+        data.add("Note 4")
+        data.add("Note 5")
+        data.add("Note 6")
+        data.add("Note 7")
+        data.add("Note 8")
+        data.add("Note 9")
+        data.add("Note 10")
+        // This will pass the ArrayList to our Adapter
+        val adapter = ListNotesAdapter(data)
+
+        // Setting the Adapter with the recyclerview
+        _binding.recyclerView.adapter = adapter
+        _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
         return _binding.root
