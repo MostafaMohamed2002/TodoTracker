@@ -6,9 +6,12 @@ import com.mostafadevo.todo.data.TodoDAO
 
 class TodoRepository(private val todoDAO: TodoDAO) {
 
-    val getAllTodo : LiveData<List<Todo>> = todoDAO.getAllTodos()
+    val getAllTodo: LiveData<List<Todo>> = todoDAO.getAllTodos()
 
-   suspend fun insertTodo(todo: Todo){
-       todoDAO.insertTodo(todo)
-   }
+    suspend fun insertTodo(todo: Todo) {
+        todoDAO.insertTodo(todo)
+    }
+    suspend fun deleteAllTodos() {
+        todoDAO.deleteAllTodos()
+    }
 }

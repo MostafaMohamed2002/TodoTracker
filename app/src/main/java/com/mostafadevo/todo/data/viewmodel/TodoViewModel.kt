@@ -1,6 +1,7 @@
 package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
+import android.widget.ResourceCursorTreeAdapter
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -33,6 +34,15 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     fun insertTodo(todo: Todo){
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTodo(todo)
+        }
+    }
+    fun getAllTodos(): LiveData<List<Todo>> {
+        return getAllTodo
+    }
+
+    fun deleteAllTodos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllTodos()
         }
     }
 }
