@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data
+package com.mostafadevo.todo.data.model
 
 enum class Priority {
     HIGH,
