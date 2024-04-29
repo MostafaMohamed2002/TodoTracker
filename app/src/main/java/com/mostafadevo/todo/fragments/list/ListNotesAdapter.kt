@@ -26,8 +26,6 @@ class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<L
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = itemInList
-        //sets the image to the imageview from our itemHolder class
-        holder.imgview.setBackgroundResource(R.drawable.baseline_inbox_24)
     }
 
     // return the number of the items in the list
@@ -37,7 +35,6 @@ class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<L
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imgview = itemView.findViewById<View>(R.id.imageView)
-        val textView: TextView = itemView.findViewById(R.id.textView2)
+        val textView: TextView = itemView.findViewById(R.id.title_todo_textview)
     }
 }
