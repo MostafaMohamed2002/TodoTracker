@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mostafadevo.noteluxe"
+        applicationId = "com.mostafadevo.todoapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -48,7 +48,14 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${"$"}kotlin_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // If using Lifecycle-aware coroutines
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
 }
