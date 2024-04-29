@@ -32,6 +32,12 @@ class listFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+        setHasOptionsMenu(true)
+    }
+
+    private fun setupRecyclerView() {
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val data = ArrayList<String>()
         for (i in 0..100) {
@@ -42,8 +48,6 @@ class listFragment : Fragment() {
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
