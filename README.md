@@ -1,7 +1,7 @@
 # Todo Tracker App
 ## What is this app?
 ## why I'm building this app?
-
+## App workFlow and screenshot
 ## Folder Structure 
 ```bash
 \---todo
@@ -22,3 +22,4 @@
 ## Architecture Pattern 
 I used **MVVM** Architecture Pattern.
 ### Why **MVVM** ?
+
