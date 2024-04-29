@@ -3,11 +3,14 @@ package com.mostafadevo.todo.fragments.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mostafadevo.todo.R
+import com.mostafadevo.todo.data.model.Priority
+import com.mostafadevo.todo.data.model.Todo
 
-class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
+class ListNotesAdapter(private val mList: List<Todo>) : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +28,14 @@ class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<L
         val itemInList = mList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.textView.text = itemInList
+        holder.titleTextView.text = itemInList.title
+        holder.descriptionTextView.text = itemInList.description
+        when(itemInList.priority){
+            Priority.HIGH->holder.priorityImgView.setImageResource(R.drawable.priority_high)
+            Priority.MEDIUM->holder.priorityImgView.setImageResource(R.drawable.priority_mid)
+            Priority.LOW->holder.priorityImgView.setImageResource(R.drawable.priority_low)
+        }
+
     }
 
     // return the number of the items in the list
@@ -35,6 +45,8 @@ class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<L
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val textView: TextView = itemView.findViewById(R.id.title_todo_textview)
+        val titleTextView: TextView = itemView.findViewById(R.id.title_todo_textview)
+        val descriptionTextView:TextView = ItemView.findViewById(R.id.description_todo_textview)
+        val priorityImgView :ImageView = ItemView.findViewById(R.id.priority_todo_imgview)
     }
 }
