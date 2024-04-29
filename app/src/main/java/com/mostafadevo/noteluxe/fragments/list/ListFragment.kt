@@ -3,8 +3,12 @@ package com.mostafadevo.noteluxe.fragments.list
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -24,28 +28,30 @@ class listFragment : Fragment() {
     ): View? {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
+
+        return _binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         val data = ArrayList<String>()
-        data.add("Note 1")
-        data.add("Note 2")
-        data.add("Note 3")
-        data.add("Note 4")
-        data.add("Note 5")
-        data.add("Note 6")
-        data.add("Note 7")
-        data.add("Note 8")
-        data.add("Note 9")
-        data.add("Note 10")
-        // This will pass the ArrayList to our Adapter
+        for (i in 0..100) {
+            data.add("Note $i")
+        }
         val adapter = ListNotesAdapter(data)
-
-        // Setting the Adapter with the recyclerview
         _binding.recyclerView.adapter = adapter
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-        return _binding.root
+        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
 }
