@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,7 @@ import com.mostafadevo.todo.databinding.FragmentListBinding
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding
-    private lateinit var viewModel: TodoViewModel
+    private val viewModel: TodoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,8 @@ class listFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
+//        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
+//        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
         setupRecyclerView()
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
@@ -52,7 +53,7 @@ class listFragment : Fragment() {
     private fun setupRecyclerView() {
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.getAllTodos().observe(this@listFragment, Observer {
+        viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
             val adapter = ListNotesAdapter(it)
             _binding.recyclerView.adapter = adapter
         })
@@ -66,7 +67,9 @@ class listFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteall) {
             viewModel.deleteAllTodos()
-            Snackbar.make(requireView(), "All notes deleted", Snackbar.LENGTH_SHORT).show()
+            val snackbar=Snackbar.make(requireView(), "All notes deleted", Snackbar.LENGTH_SHORT)
+            snackbar.setAnchorView(_binding.createNewNoteFab)
+            snackbar.show()
         }
         return super.onOptionsItemSelected(item)
     }

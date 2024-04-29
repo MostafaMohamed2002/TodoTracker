@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
@@ -16,7 +17,7 @@ import com.mostafadevo.todo.databinding.FragmentAddBinding
 
 class addFragment : Fragment() {
     private lateinit var _binding: FragmentAddBinding
-    private lateinit var viewModel: TodoViewModel
+    private  val viewModel: TodoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class addFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
-        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
+//        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
 
         _binding.addNoteButton.setOnClickListener {
             addTodo()
