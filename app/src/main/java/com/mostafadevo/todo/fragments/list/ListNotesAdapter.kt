@@ -1,11 +1,11 @@
-package com.mostafadevo.noteluxe.fragments.list
+package com.mostafadevo.todo.fragments.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.mostafadevo.noteluxe.R
+import com.mostafadevo.todo.R
 
 class ListNotesAdapter(private val mList: List<String>) : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.mostafadevo.noteluxe
+package com.mostafadevo.todo
 
 import org.junit.Test
 

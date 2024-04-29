@@ -1,12 +1,11 @@
-package com.mostafadevo.noteluxe.fragments.add
+package com.mostafadevo.todo.fragments.add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mostafadevo.noteluxe.R
-import com.mostafadevo.noteluxe.databinding.FragmentAddBinding
+import com.mostafadevo.todo.databinding.FragmentAddBinding
 
 
 class addFragment : Fragment() {

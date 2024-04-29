@@ -1,4 +1,4 @@
-package com.mostafadevo.noteluxe.fragments.list
+package com.mostafadevo.todo.fragments.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,13 +7,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.mostafadevo.noteluxe.R
-import com.mostafadevo.noteluxe.databinding.FragmentListBinding
+import com.mostafadevo.todo.R
+import com.mostafadevo.todo.databinding.FragmentListBinding
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding

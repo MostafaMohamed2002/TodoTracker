@@ -1,4 +1,4 @@
-package com.mostafadevo.noteluxe
+package com.mostafadevo.todo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

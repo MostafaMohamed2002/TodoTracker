@@ -1,11 +1,11 @@
-package com.mostafadevo.noteluxe
+package com.mostafadevo.todo
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.mostafadevo.noteluxe.databinding.ActivityMainBinding
+import com.mostafadevo.todo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding

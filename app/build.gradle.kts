@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mostafadevo.noteluxe"
+    namespace = "com.mostafadevo.todo"
     compileSdk = 34
 
     defaultConfig {
