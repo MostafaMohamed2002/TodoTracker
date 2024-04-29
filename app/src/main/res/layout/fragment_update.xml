@@ -15,7 +15,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/title_textinput"
+        android:id="@+id/update_title_textinput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,24 +32,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
-        android:id="@+id/priority_spinner"
+        android:id="@+id/update_priority_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:minHeight="48dp"
         android:entries="@array/priority_array"
-        app:layout_constraintEnd_toEndOf="@+id/title_textinput"
-        app:layout_constraintStart_toStartOf="@+id/title_textinput"
-        app:layout_constraintTop_toBottomOf="@+id/title_textinput" />
+        app:layout_constraintEnd_toEndOf="@+id/update_title_textinput"
+        app:layout_constraintStart_toStartOf="@+id/update_title_textinput"
+        app:layout_constraintTop_toBottomOf="@+id/update_title_textinput" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/description_textinput"
+        android:id="@+id/update_description_textinput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/priority_spinner"
-        app:layout_constraintStart_toStartOf="@+id/priority_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/priority_spinner">
+        app:layout_constraintEnd_toEndOf="@+id/update_priority_spinner"
+        app:layout_constraintStart_toStartOf="@+id/update_priority_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/update_priority_spinner">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="Update Note 🔁"
+        android:text="Update Todo 🔁"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"
