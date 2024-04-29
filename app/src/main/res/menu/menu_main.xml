@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/deleteall"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="DeleteAll"
+        android:visible="true" />
+    <group
+        android:checkableBehavior="single">
+        <item android:id="@+id/sort_by"
+            android:title="Sort by priority">
+            <menu>
+                <item
+                    android:id="@+id/high"
+                    android:checkable="true"
+                    android:enabled="true"
+                    android:orderInCategory="100"
+                    android:title="High"
+                    android:visible="true" />
+                <item
+                    android:id="@+id/medium"
+                    android:checkable="true"
+                    android:enabled="true"
+                    android:orderInCategory="100"
+                    android:title="Medium"
+                    android:visible="true" />
+                <item
+                    android:id="@+id/low"
+                    android:checkable="true"
+                    android:enabled="true"
+                    android:orderInCategory="100"
+                    android:title="Low"
+                    android:visible="true" />
+            </menu>
+        </item>
+    </group>
+
+</menu>
