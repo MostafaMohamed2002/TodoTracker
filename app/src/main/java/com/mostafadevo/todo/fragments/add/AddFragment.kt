@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
@@ -55,7 +56,8 @@ class addFragment : Fragment() {
                 0, title, parsedPriority, description
             )
             viewModel.insertTodo(newTodo)
-            Toast.makeText(requireContext(), "added", Toast.LENGTH_SHORT).show()
+            findNavController().navigateUp()
+            Toast.makeText(requireContext(), "Todo Added", Toast.LENGTH_SHORT).show()
         } else Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show()
     }
 
