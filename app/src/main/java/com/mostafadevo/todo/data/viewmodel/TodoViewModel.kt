@@ -1,7 +1,10 @@
 package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
-import android.widget.ResourceCursorTreeAdapter
+import android.view.View
+import android.widget.AdapterView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,28 +19,60 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
-    class TodoViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(TodoViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return TodoViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 
-    private val _priorityColor = MutableLiveData<Int>()
-    val priorityColor: LiveData<Int>
-        get() = _priorityColor
+
+
     private val repository: TodoRepository
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
     private val getAllTodo: LiveData<List<Todo>>
+    val listner: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            when (position) {
+                0 -> {
+                    (parent?.getChildAt(0) as TextView).setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.priority_high
+                        )
+                    )
+                }
+
+                0 -> {
+                    (parent?.getChildAt(1) as TextView).setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.priority_medium
+                        )
+                    )
+                }
+
+                0 -> {
+                    (parent?.getChildAt(2) as TextView).setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.priority_low
+                        )
+                    )
+                }
+            }
+
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
+    }
 
     init {
         repository = TodoRepository(todoDAO)
         getAllTodo = repository.getAllTodo
     }
 
+    //database operations
     fun insertTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTodo(todo)
@@ -54,25 +89,5 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun setSpinnerPriorityColor(position: Int) {
-        _priorityColor.value = when (position) {
-            0 -> {
-                R.color.priority_high
-            }
-
-            1 -> {
-                R.color.priority_medium
-            }
-
-            2 -> {
-                R.color.priority_low
-            }
-
-            else -> {
-                android.R.color.transparent
-            }
-        }
-
-    }
 
 }

@@ -35,8 +35,6 @@ class addFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
-//        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
 
         _binding.addNoteButton.setOnClickListener {
             addTodo()
@@ -46,23 +44,7 @@ class addFragment : Fragment() {
     }
 
     private fun changePrioritySpinnerColor() {
-        _binding.addPrioritySpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
-                ) {
-                    viewModel.setSpinnerPriorityColor(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
-
-            }
-        //observe the color change
-        viewModel.priorityColor.observe(viewLifecycleOwner) {
-            _binding.addPrioritySpinner.setBackgroundColor(resources.getColor(it))
-        }
+        _binding.addPrioritySpinner.onItemSelectedListener=viewModel.listner
     }
 
     private fun addTodo() {
