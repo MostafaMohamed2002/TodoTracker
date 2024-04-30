@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     id("androidx.navigation.safeargs")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -37,6 +38,9 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    sourceSets {
+        getByName("main").java.srcDirs("build/generated/source/navigation-args")
     }
 }
 
