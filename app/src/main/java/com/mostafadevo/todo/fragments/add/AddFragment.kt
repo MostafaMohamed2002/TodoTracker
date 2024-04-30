@@ -1,17 +1,13 @@
 package com.mostafadevo.todo.fragments.add
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.model.Priority
+import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
 import com.mostafadevo.todo.databinding.FragmentAddBinding
@@ -54,24 +50,13 @@ class addFragment : Fragment() {
         //check if those text fields not empty
         val isNotEmpty = title.isNotEmpty() == true && description.isNotEmpty() == true
         if (isNotEmpty) {
-            val parsedPriority = parsePriority(priority)
+            val parsedPriority = Utils.parsePriorityFromStringToEnum(priority)
             val newTodo = Todo(
                 0, title, parsedPriority, description
             )
             viewModel.insertTodo(newTodo)
             Toast.makeText(requireContext(), "added", Toast.LENGTH_SHORT).show()
         } else Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun parsePriority(priority: String): Priority {
-        return when (priority) {
-            "High" -> Priority.HIGH
-            "Medium" -> Priority.MEDIUM
-            "Low" -> Priority.LOW
-            else -> {
-                Priority.LOW
-            }
-        }
     }
 
 }
