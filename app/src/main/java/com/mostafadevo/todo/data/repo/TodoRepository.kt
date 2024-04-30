@@ -1,8 +1,8 @@
 package com.mostafadevo.todo.data.repo
 
 import androidx.lifecycle.LiveData
-import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.TodoDAO
+import com.mostafadevo.todo.data.model.Todo
 
 class TodoRepository(private val todoDAO: TodoDAO) {
 
@@ -13,5 +13,8 @@ class TodoRepository(private val todoDAO: TodoDAO) {
     }
     suspend fun deleteAllTodos() {
         todoDAO.deleteAllTodos()
+    }
+    suspend fun updateTodo(todo: Todo){
+        todoDAO.updateTodo(todo)
     }
 }

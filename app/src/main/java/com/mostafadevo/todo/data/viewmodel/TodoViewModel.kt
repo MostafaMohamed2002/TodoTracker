@@ -7,9 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.TodoDataBase
@@ -86,6 +83,12 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteAllTodos() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllTodos()
+        }
+    }
+
+    fun updateTodo(todo: Todo){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateTodo(todo)
         }
     }
 
