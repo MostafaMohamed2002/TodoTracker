@@ -42,8 +42,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
 
-                0 -> {
-                    (parent?.getChildAt(1) as TextView).setTextColor(
+                1 -> {
+                    (parent?.getChildAt(0) as TextView).setTextColor(
                         ContextCompat.getColor(
                             application,
                             R.color.priority_medium
@@ -51,8 +51,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
 
-                0 -> {
-                    (parent?.getChildAt(2) as TextView).setTextColor(
+                2 -> {
+                    (parent?.getChildAt(0) as TextView).setTextColor(
                         ContextCompat.getColor(
                             application,
                             R.color.priority_low
