@@ -52,11 +52,11 @@ class listFragment : Fragment() {
 
     private fun setupRecyclerView() {
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+        val adapter = ListNotesAdapter()
         viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
-            val adapter = ListNotesAdapter(it)
-            _binding.recyclerView.adapter = adapter
+            adapter.setData(it)
         })
+        _binding.recyclerView.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

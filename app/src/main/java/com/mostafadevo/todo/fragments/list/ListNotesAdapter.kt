@@ -10,8 +10,8 @@ import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
 
-class ListNotesAdapter(private val mList: List<Todo>) : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
-
+class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
+    private var mList: List<Todo> = emptyList()
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -48,5 +48,10 @@ class ListNotesAdapter(private val mList: List<Todo>) : RecyclerView.Adapter<Lis
         val titleTextView: TextView = itemView.findViewById(R.id.title_todo_textview)
         val descriptionTextView:TextView = ItemView.findViewById(R.id.description_todo_textview)
         val priorityImgView :ImageView = ItemView.findViewById(R.id.priority_todo_imgview)
+    }
+
+    fun setData(todoList: List<Todo>){
+        mList = todoList
+        notifyDataSetChanged()
     }
 }
