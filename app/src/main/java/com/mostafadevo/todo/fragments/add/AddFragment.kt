@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
@@ -17,7 +19,7 @@ import com.mostafadevo.todo.databinding.FragmentAddBinding
 
 class addFragment : Fragment() {
     private lateinit var _binding: FragmentAddBinding
-    private  val viewModel: TodoViewModel by viewModels()
+    private val viewModel: TodoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,28 @@ class addFragment : Fragment() {
 
         _binding.addNoteButton.setOnClickListener {
             addTodo()
+            //change priority spinner color based on selected item
+        }
+        changePrioritySpinnerColor()
+    }
+
+    private fun changePrioritySpinnerColor() {
+        _binding.addPrioritySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+                    viewModel.setSpinnerPriorityColor(position)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+        //observe the color change
+        viewModel.priorityColor.observe(viewLifecycleOwner) {
+            _binding.addPrioritySpinner.setBackgroundColor(resources.getColor(it))
         }
     }
 
@@ -50,17 +74,11 @@ class addFragment : Fragment() {
         if (isNotEmpty) {
             val parsedPriority = parsePriority(priority)
             val newTodo = Todo(
-                0,
-                title,
-                parsedPriority,
-                description
+                0, title, parsedPriority, description
             )
             viewModel.insertTodo(newTodo)
-            Toast.makeText(requireContext(), "added", Toast.LENGTH_SHORT)
-                .show()
-        }else
-            Toast.makeText(requireContext(),"Fill",Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(requireContext(), "added", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show()
     }
 
     private fun parsePriority(priority: String): Priority {

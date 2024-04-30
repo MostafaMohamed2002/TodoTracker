@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="priority_high">#FF6347</color> <!-- Tomato Red -->
+    <color name="priority_medium">#FFD700</color> <!-- Gold -->
+    <color name="priority_low">#32CD32</color> <!-- Lime Green -->
+
 </resources>
