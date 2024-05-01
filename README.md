@@ -5,7 +5,6 @@
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contact](#contact)
 
@@ -34,19 +33,7 @@ Include screenshots here to visually demonstrate the app's functionality and int
 - **Room** Database: Manages data persistence for storing tasks locally.
 - **LiveData & ViewModel**: Ensures UI matches data state in real-time and manages data lifecycle efficiently.
 - **Coroutines**: Handles asynchronous tasks effectively, improving app performance.
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-## Prerequisites
-Install Android Studio, which includes the Android SDK and the emulator system.
-## Installation
-1. Fork and clone the repo:
-```bash
-git clone https://github.com/your-username/TodoTracker.git
-```
-1. Open Android Studio and import the project.
-2. Sync the project with Gradle.
-3. Run the application in the emulator or on a physical device.
+  
 ## Usage
 Here's how you can use Todo Tracker to boost your productivity:
 
