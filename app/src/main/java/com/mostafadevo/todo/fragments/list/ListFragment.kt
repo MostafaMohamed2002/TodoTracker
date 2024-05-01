@@ -74,6 +74,10 @@ class listFragment : Fragment() {
             snackbar.setAnchorView(_binding.createNewNoteFab)
             snackbar.show()
         }
+        else if (item.itemId == R.id.sort_by) {
+            val sortBottomSheet = SortBottomSheetFragment()
+            sortBottomSheet.show(childFragmentManager, sortBottomSheet.tag)
+        }
         return super.onOptionsItemSelected(item)
     }
 
