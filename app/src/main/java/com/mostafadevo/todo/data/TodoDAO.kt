@@ -20,6 +20,32 @@ interface TodoDAO {
     fun deleteAllTodos()
 
     @Update
-    suspend fun updateTodo(todo: Todo)
+    fun updateTodo(todo: Todo)
 
+    //handle sorting
+    /*
+        newest
+        oldest
+        priority high
+        Priority low
+        title a z
+        title z a
+    */
+    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'LOW' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'HIGH' THEN 3 ELSE 4 END ASC")
+    fun sortByLowPriority(): LiveData<List<Todo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'LOW' THEN 3 ELSE 4 END ASC")
+    fun sortByHighPriority(): LiveData<List<Todo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY id DESC")
+    fun sortByNewest():LiveData<List<Todo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY id ASC")
+    fun sortByOldest(): LiveData<List<Todo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY title ASC")
+    fun sortByTitleAZ(): LiveData<List<Todo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY title DESC")
+    fun sortByTitleZA(): LiveData<List<Todo>>
 }
