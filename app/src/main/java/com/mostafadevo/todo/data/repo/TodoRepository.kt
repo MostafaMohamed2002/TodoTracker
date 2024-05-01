@@ -1,10 +1,8 @@
 package com.mostafadevo.todo.data.repo
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asFlow
 import com.mostafadevo.todo.data.TodoDAO
 import com.mostafadevo.todo.data.model.Todo
-import kotlinx.coroutines.flow.Flow
 
 class TodoRepository(private val todoDAO: TodoDAO) {
 
@@ -20,7 +18,7 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         todoDAO.updateTodo(todo)
     }
 
-     fun getTodoSortedBy(sortType: String): Flow<List<Todo>> {
+     fun getTodoSortedBy(sortType: String): LiveData<List<Todo>> {
         return when (sortType) {
             "newest" -> todoDAO.sortByNewest()
             "oldest" -> todoDAO.sortByOldest()
@@ -29,6 +27,6 @@ class TodoRepository(private val todoDAO: TodoDAO) {
             "title A to Z" -> todoDAO.sortByTitleAZ()
             "title Z to A" -> todoDAO.sortByTitleZA()
             else -> todoDAO.sortByOldest()
-        }.asFlow()
+        }
     }
 }

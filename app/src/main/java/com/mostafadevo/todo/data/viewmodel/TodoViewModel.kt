@@ -6,17 +6,13 @@ import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,8 +21,6 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: TodoRepository
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
 
-    private val _sortType = MutableStateFlow<String>("newest")
-    val sortType: StateFlow<String> = _sortType.asStateFlow()
 
     val prioritySelectionListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
@@ -70,15 +64,18 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
+    val _sortType = MutableLiveData<String>("newest")
+    val sortedData = MutableLiveData<List<Todo>>()
 
     init {
         repository = TodoRepository(todoDAO)
-    }
-    val sortedData = _sortType
-        .flatMapLatest { sortType ->
-            repository.getTodoSortedBy(sortType) // Assuming you adapt the repository to return Flow
+        _sortType.observeForever { newSortType ->
+            repository.getTodoSortedBy(newSortType).observeForever { sortedTodos ->
+                sortedData.postValue(sortedTodos)
+            }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+
+    }
 
 
 
@@ -100,6 +97,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
             repository.updateTodo(todo)
         }
     }
+
     fun setSortType(newSortType: String) {
         _sortType.value = newSortType
     }
