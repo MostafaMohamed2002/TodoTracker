@@ -1,6 +1,7 @@
 package com.mostafadevo.todo.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import com.mostafadevo.todo.databinding.FragmentListBinding
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding
-    private val viewModel: TodoViewModel by viewModels()
+    private val viewModel: TodoViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +58,11 @@ class listFragment : Fragment() {
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = ListNotesAdapter()
         _binding.recyclerView.adapter = adapter
-        viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
+        viewModel.sortedData.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
+            Log.d("TodoActivity", "Received todos: $it")
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

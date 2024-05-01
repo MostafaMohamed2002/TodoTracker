@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mostafadevo.todo.R
+import com.mostafadevo.todo.data.viewmodel.TodoViewModel
 
 class SortBottomSheetFragment : BottomSheetDialogFragment() {
-
+    private val mTodoViewModel: TodoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,12 +33,8 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun handleSort(sortType: String) {
-        // Implement your sorting logic here
-        println("Sorting by: $sortType")
+        mTodoViewModel.setSortType(sortType)
+        dismiss()
     }
 }
 
-fun showBottomSheet(fragmentManager: FragmentManager) {
-    val bottomSheetFragment = SortBottomSheetFragment()
-    bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
-}

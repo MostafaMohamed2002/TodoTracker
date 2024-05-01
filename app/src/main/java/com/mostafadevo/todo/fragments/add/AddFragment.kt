@@ -41,7 +41,7 @@ class addFragment : Fragment() {
     }
 
     private fun changePrioritySpinnerColor() {
-        _binding.addPrioritySpinner.onItemSelectedListener=viewModel.listner
+        _binding.addPrioritySpinner.onItemSelectedListener=viewModel.prioritySelectionListener
     }
 
     private fun addTodo() {

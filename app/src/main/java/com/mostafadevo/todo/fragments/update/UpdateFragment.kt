@@ -36,7 +36,7 @@ class updateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.updatePrioritySpinner.onItemSelectedListener = mTodoViewModel.listner
+        _binding.updatePrioritySpinner.onItemSelectedListener = mTodoViewModel.prioritySelectionListener
         logSafeArgsData()
         retreiveDataFromSafeArgs()
         saveUpdatedTodo()
