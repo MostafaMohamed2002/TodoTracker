@@ -9,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -60,6 +62,9 @@ class listFragment : Fragment() {
 
 
     private fun setupRecyclerView() {
+        val animation = AnimationUtils.loadAnimation(context, R.anim.layout_animation_fall_down)
+        val controller = LayoutAnimationController(animation)
+        _binding.recyclerView.layoutAnimation = controller
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = ListNotesAdapter()
         _binding.recyclerView.adapter = adapter
@@ -72,8 +77,10 @@ class listFragment : Fragment() {
                 _binding.emptyTextView.visibility= View.GONE
             }
             adapter.setData(it)
+            _binding.recyclerView.scheduleLayoutAnimation()
             Log.d("TodoActivity", "Received todos: $it")
         })
+
 
         // Create an instance of ItemTouchHelper.SimpleCallback to handle swipe gestures on RecyclerView items.
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
