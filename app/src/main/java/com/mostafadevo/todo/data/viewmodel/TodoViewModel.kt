@@ -102,5 +102,11 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         _sortType.value = newSortType
     }
 
+    fun deleteTodoItem(itemToDelete: Todo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteTodoItem(itemToDelete)
+        }
+    }
+
 
 }

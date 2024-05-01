@@ -29,4 +29,8 @@ class TodoRepository(private val todoDAO: TodoDAO) {
             else -> todoDAO.sortByOldest()
         }
     }
+
+    suspend fun deleteTodoItem(itemToDelete: Todo) {
+        todoDAO.deleteTodoItem(itemToDelete)
+    }
 }

@@ -14,6 +14,10 @@ import com.mostafadevo.todo.data.model.Todo
 
 class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
     private var mList: List<Todo> = emptyList()
+    //get the list of items
+    fun getItems(): List<Todo> {
+        return mList
+    }
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view

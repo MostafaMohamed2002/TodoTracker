@@ -2,6 +2,7 @@ package com.mostafadevo.todo.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -48,4 +49,7 @@ interface TodoDAO {
 
     @Query("SELECT * FROM todo_table ORDER BY title DESC")
     fun sortByTitleZA(): LiveData<List<Todo>>
+
+    @Delete
+    fun deleteTodoItem(itemToDelete: Todo)
 }

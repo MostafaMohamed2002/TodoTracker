@@ -1,5 +1,6 @@
 package com.mostafadevo.todo.fragments.list
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
@@ -46,13 +49,15 @@ class listFragment : Fragment() {
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-        updateItems()
+        swipeToDeleteItemInRecyclerView()
         (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
         setHasOptionsMenu(true)
     }
 
-    private fun updateItems() {
+    private fun swipeToDeleteItemInRecyclerView() {
+// Inside your Fragment or Activity where the RecyclerView is located
     }
+
 
     private fun setupRecyclerView() {
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -69,6 +74,75 @@ class listFragment : Fragment() {
             adapter.setData(it)
             Log.d("TodoActivity", "Received todos: $it")
         })
+
+        // Create an instance of ItemTouchHelper.SimpleCallback to handle swipe gestures on RecyclerView items.
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+
+            // This method is called when an item is moved within the RecyclerView.
+            // Since we're not handling drag-and-drop in this case, we simply return false.
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            // This method is called when an item is swiped off the screen.
+            // Here, we handle the logic for deleting the swiped item from our data set.
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Get the position of the swiped item.
+                val position = viewHolder.adapterPosition
+
+                // Retrieve the item to be deleted from the adapter's data set.
+                val itemToDelete = adapter.getItems()[position]
+
+                // Notify the adapter that an item has been removed from the data set.
+                adapter.notifyItemRemoved(position)
+
+                // Delete the swiped item from the database using the ViewModel.
+                viewModel.deleteTodoItem(itemToDelete)
+
+                val deleteTodoSnacbar = Snackbar.make(requireView(), "Note deleted", Snackbar.LENGTH_SHORT)
+                deleteTodoSnacbar.setAnchorView(_binding.createNewNoteFab)
+                deleteTodoSnacbar.setAction("Undo") {
+                    viewModel.insertTodo(itemToDelete)
+                }
+                deleteTodoSnacbar.show()
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                val swipePercentage = dX / viewHolder.itemView.width
+                viewHolder.itemView.alpha = 1 - Math.abs(swipePercentage)
+            }
+
+            override fun clearView(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
+                super.clearView(recyclerView, viewHolder)
+                viewHolder.itemView.alpha = 1.0f
+            }
+        }
+
+        // Create an instance of ItemTouchHelper with the callback we defined above.
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+
+        // Attach the ItemTouchHelper to the RecyclerView. This enables swipe-to-delete functionality on the RecyclerView items.
+        itemTouchHelper.attachToRecyclerView(_binding.recyclerView)
 
     }
 
@@ -90,6 +164,4 @@ class listFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }
