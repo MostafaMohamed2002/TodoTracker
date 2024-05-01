@@ -59,6 +59,13 @@ class listFragment : Fragment() {
         val adapter = ListNotesAdapter()
         _binding.recyclerView.adapter = adapter
         viewModel.sortedData.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                _binding.emptyImageView.visibility = View.VISIBLE
+                _binding.emptyTextView.visibility= View.VISIBLE
+            } else {
+                _binding.emptyImageView.visibility = View.GONE
+                _binding.emptyTextView.visibility= View.GONE
+            }
             adapter.setData(it)
             Log.d("TodoActivity", "Received todos: $it")
         })
