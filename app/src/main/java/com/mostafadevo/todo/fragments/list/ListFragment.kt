@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -51,15 +52,27 @@ class listFragment : Fragment() {
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-        swipeToDeleteItemInRecyclerView()
+        setupSearchFunction()
         (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
         setHasOptionsMenu(true)
     }
 
-    private fun swipeToDeleteItemInRecyclerView() {
-// Inside your Fragment or Activity where the RecyclerView is located
-    }
+    private fun setupSearchFunction() {
+        val madapter = ListNotesAdapter()
+        _binding.searchRecyclerView.adapter = madapter
+        _binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        _binding.searchView.editText?.addTextChangedListener {
+            //if edit text is empty show all notes
+            if (it.toString().isEmpty()) {
 
+            } else {
+                viewModel.search(it.toString())
+                viewModel.searchedTodos.observe(viewLifecycleOwner, Observer {
+                    madapter.setData(it)
+                })
+            }
+        }
+    }
 
     private fun setupRecyclerView() {
         val animation = AnimationUtils.loadAnimation(context, R.anim.layout_animation_fall_down)

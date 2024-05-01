@@ -11,7 +11,7 @@ import com.mostafadevo.todo.data.model.Todo
 @Dao
 interface TodoDAO {
     @Query("select * from todo_table")
-    fun getAllTodos():LiveData<List<Todo>>
+    fun getAllTodos(): LiveData<List<Todo>>
 
     @Insert
     fun insertTodo(todo: Todo)
@@ -39,7 +39,7 @@ interface TodoDAO {
     fun sortByHighPriority(): LiveData<List<Todo>>
 
     @Query("SELECT * FROM todo_table ORDER BY id DESC")
-    fun sortByNewest():LiveData<List<Todo>>
+    fun sortByNewest(): LiveData<List<Todo>>
 
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
     fun sortByOldest(): LiveData<List<Todo>>
@@ -52,4 +52,7 @@ interface TodoDAO {
 
     @Delete
     fun deleteTodoItem(itemToDelete: Todo)
+
+    @Query("SELECT * FROM TODO_TABLE WHERE title LIKE '%' || :query || '%' OR description LIKE '%' || :query || '%'")
+    fun search(query: String): LiveData<List<Todo>>
 }

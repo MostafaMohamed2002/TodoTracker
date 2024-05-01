@@ -66,6 +66,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
     val _sortType = MutableLiveData<String>("newest")
     val sortedData = MutableLiveData<List<Todo>>()
+    val searchedTodos = MutableLiveData<List<Todo>>()
 
     init {
         repository = TodoRepository(todoDAO)
@@ -76,7 +77,6 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
-
 
 
     //database operations
@@ -105,6 +105,14 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteTodoItem(itemToDelete: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTodoItem(itemToDelete)
+        }
+    }
+
+    fun search(query: String) {
+        viewModelScope.launch() {
+            repository.search(query).observeForever { result ->
+                searchedTodos.postValue(result)
+            }
         }
     }
 
