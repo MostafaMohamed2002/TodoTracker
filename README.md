@@ -8,7 +8,6 @@
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contact](#contact)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 Todo Tracker is a robust Android application designed to help users effortlessly manage their daily tasks. Developed with a focus on high usability and aesthetic design, Todo Tracker allows users to not just organize their tasks but also do it with style and efficiency.
@@ -46,8 +45,8 @@ Install Android Studio, which includes the Android SDK and the emulator system.
 git clone https://github.com/your-username/TodoTracker.git
 ```
 1. Open Android Studio and import the project.
-1. Sync the project with Gradle.
-1. Run the application in the emulator or on a physical device.
+2. Sync the project with Gradle.
+3. Run the application in the emulator or on a physical device.
 ## Usage
 Here's how you can use Todo Tracker to boost your productivity:
 
