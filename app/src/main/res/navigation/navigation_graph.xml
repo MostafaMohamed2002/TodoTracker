@@ -38,5 +38,8 @@
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <argument
+            android:name="currentTodo"
+            app:argType="com.mostafadevo.todo.data.model.Todo" />
     </fragment>
 </navigation>
