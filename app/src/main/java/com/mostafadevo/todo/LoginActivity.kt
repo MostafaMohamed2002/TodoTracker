@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         mFirebaseAuth = Firebase.auth
         val currentUser = mFirebaseAuth.currentUser
-        Toast.makeText(this, "Welcome ${currentUser?.displayName}", Toast.LENGTH_SHORT).show()
 
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

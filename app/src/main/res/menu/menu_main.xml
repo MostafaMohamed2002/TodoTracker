@@ -11,5 +11,9 @@
     <item
         android:id="@+id/sort_by"
         android:title="Sort By" />
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/baseline_logout_24"
+        android:title="Logout" />
 
 </menu>

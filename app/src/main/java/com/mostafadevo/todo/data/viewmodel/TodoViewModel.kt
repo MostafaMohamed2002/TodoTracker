@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseAuth
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
@@ -20,7 +22,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: TodoRepository
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
-
+    private lateinit var mFirebaseAuth: FirebaseAuth
 
     val prioritySelectionListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
@@ -67,6 +69,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     val _sortType = MutableLiveData<String>("newest")
     val sortedData = MutableLiveData<List<Todo>>()
     val searchedTodos = MutableLiveData<List<Todo>>()
+    var currentUser: String? = null
 
     init {
         repository = TodoRepository(todoDAO)
@@ -75,7 +78,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
                 sortedData.postValue(sortedTodos)
             }
         }
-
+        mFirebaseAuth = FirebaseAuth.getInstance()
+        currentUser = mFirebaseAuth.currentUser?.displayName
     }
 
 
@@ -114,6 +118,11 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
                 searchedTodos.postValue(result)
             }
         }
+    }
+
+    fun logout(googleSignInClient: GoogleSignInClient) {
+        mFirebaseAuth.signOut()
+        googleSignInClient.signOut()
     }
 
 

@@ -1,13 +1,18 @@
 package com.mostafadevo.todo.fragments.list
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -17,8 +22,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.mostafadevo.todo.LoginActivity
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
@@ -46,8 +55,13 @@ class listFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
 //        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
+        Toast.makeText(requireContext(), "Welcome ${viewModel.currentUser.toString()}", Toast.LENGTH_SHORT).show()
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        gsc = GoogleSignIn.getClient(requireContext(), gso)
         setupRecyclerView()
-        setupSearchBarMenu()
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
@@ -112,10 +126,10 @@ class listFragment : Fragment() {
         viewModel.sortedData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 _binding.emptyImageView.visibility = View.VISIBLE
-                _binding.emptyTextView.visibility = View.VISIBLE
+                _binding.emptyTextView.visibility= View.VISIBLE
             } else {
                 _binding.emptyImageView.visibility = View.GONE
-                _binding.emptyTextView.visibility = View.GONE
+                _binding.emptyTextView.visibility= View.GONE
             }
             adapter.setData(it)
             _binding.recyclerView.scheduleLayoutAnimation()
@@ -124,73 +138,67 @@ class listFragment : Fragment() {
 
 
         // Create an instance of ItemTouchHelper.SimpleCallback to handle swipe gestures on RecyclerView items.
-        val itemTouchHelperCallback =
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
 
-                // This method is called when an item is moved within the RecyclerView.
-                // Since we're not handling drag-and-drop in this case, we simply return false.
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                // This method is called when an item is swiped off the screen.
-                // Here, we handle the logic for deleting the swiped item from our data set.
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    // Get the position of the swiped item.
-                    val position = viewHolder.adapterPosition
-
-                    // Retrieve the item to be deleted from the adapter's data set.
-                    val itemToDelete = adapter.getItems()[position]
-
-                    // Notify the adapter that an item has been removed from the data set.
-                    adapter.notifyItemRemoved(position)
-
-                    // Delete the swiped item from the database using the ViewModel.
-                    viewModel.deleteTodoItem(itemToDelete)
-
-                    val deleteTodoSnacbar =
-                        Snackbar.make(requireView(), "Note deleted", Snackbar.LENGTH_SHORT)
-                    deleteTodoSnacbar.setAnchorView(_binding.createNewNoteFab)
-                    deleteTodoSnacbar.setAction("Undo") {
-                        viewModel.insertTodo(itemToDelete)
-                    }
-                    deleteTodoSnacbar.show()
-                }
-
-                override fun onChildDraw(
-                    c: Canvas,
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    dX: Float,
-                    dY: Float,
-                    actionState: Int,
-                    isCurrentlyActive: Boolean
-                ) {
-                    super.onChildDraw(
-                        c,
-                        recyclerView,
-                        viewHolder,
-                        dX,
-                        dY,
-                        actionState,
-                        isCurrentlyActive
-                    )
-                    val swipePercentage = dX / viewHolder.itemView.width
-                    viewHolder.itemView.alpha = 1 - Math.abs(swipePercentage)
-                }
-
-                override fun clearView(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder
-                ) {
-                    super.clearView(recyclerView, viewHolder)
-                    viewHolder.itemView.alpha = 1.0f
-                }
+            // This method is called when an item is moved within the RecyclerView.
+            // Since we're not handling drag-and-drop in this case, we simply return false.
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
             }
+
+            // This method is called when an item is swiped off the screen.
+            // Here, we handle the logic for deleting the swiped item from our data set.
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Get the position of the swiped item.
+                val position = viewHolder.adapterPosition
+
+                // Retrieve the item to be deleted from the adapter's data set.
+                val itemToDelete = adapter.getItems()[position]
+
+                // Notify the adapter that an item has been removed from the data set.
+                adapter.notifyItemRemoved(position)
+
+                // Delete the swiped item from the database using the ViewModel.
+                viewModel.deleteTodoItem(itemToDelete)
+
+                val deleteTodoSnacbar = Snackbar.make(requireView(), "Note deleted", Snackbar.LENGTH_SHORT)
+                deleteTodoSnacbar.setAnchorView(_binding.createNewNoteFab)
+                deleteTodoSnacbar.setAction("Undo") {
+                    viewModel.insertTodo(itemToDelete)
+                }
+                deleteTodoSnacbar.show()
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                val swipePercentage = dX / viewHolder.itemView.width
+                viewHolder.itemView.alpha = 1 - Math.abs(swipePercentage)
+            }
+
+            override fun clearView(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
+                super.clearView(recyclerView, viewHolder)
+                viewHolder.itemView.alpha = 1.0f
+            }
+        }
 
         // Create an instance of ItemTouchHelper with the callback we defined above.
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
@@ -200,4 +208,33 @@ class listFragment : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.deleteall) {
+            //alert user that all notes have been deleted
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Delete All Todos")
+                .setMessage("Are you sure ?\nOnce its delete There is no comeback")
+                .setNegativeButton("No") { dialog, which ->
+                    // Respond to negative button press
+                }
+                .setPositiveButton("Yes") { dialog, which ->
+                    // Respond to positive button press
+                    viewModel.deleteAllTodos()
+                }
+                .show()
+        } else if (item.itemId == R.id.sort_by) {
+            val sortBottomSheet = SortBottomSheetFragment()
+            sortBottomSheet.show(childFragmentManager, sortBottomSheet.tag)
+        } else if (item.itemId == R.id.logout) {
+            viewModel.logout(gsc)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
