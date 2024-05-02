@@ -3,7 +3,7 @@ name: Android Debug Release
 on:
   push:
     branches:
-      - testing-ci-cd  # Adjust this if you want to build on a different branch
+      - master  # Adjust this if you want to build on a different branch
 
 jobs:
   build_and_release:
@@ -43,7 +43,7 @@ jobs:
         tag_name: debug-${{ steps.get_date.outputs.date }}  # Use the current date to create a unique tag
         release_name: Debug Release ${{ steps.get_date.outputs.date }}
         draft: false
-        prerelease: true
+        prerelease: false
 
     - name: Upload APK to Release
       uses: actions/upload-release-asset@v1
