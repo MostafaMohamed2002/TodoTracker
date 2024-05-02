@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
@@ -173,10 +174,18 @@ class listFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteall) {
-            viewModel.deleteAllTodos()
-            val snackbar=Snackbar.make(requireView(), "All notes deleted", Snackbar.LENGTH_SHORT)
-            snackbar.setAnchorView(_binding.createNewNoteFab)
-            snackbar.show()
+            //alert user that all notes have been deleted
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Delete All Todos")
+                .setMessage("Are you sure ?\nOnce its delete There is no comeback")
+                .setNegativeButton("No") { dialog, which ->
+                    // Respond to negative button press
+                }
+                .setPositiveButton("Yes") { dialog, which ->
+                    // Respond to positive button press
+                    viewModel.deleteAllTodos()
+                }
+                .show()
         }
         else if (item.itemId == R.id.sort_by) {
             val sortBottomSheet = SortBottomSheetFragment()
