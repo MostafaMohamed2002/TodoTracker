@@ -1,13 +1,12 @@
-name: Android CI/CD
+name: Android Debug Release
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master  # Adjust this if you want to build on a different branch
 
 jobs:
-  build:
+  build_and_release:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,15 +16,36 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-
+        
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    - name: Upload APK to GitHub Packages
+    - name: Upload Debug APK
       uses: actions/upload-artifact@v3
       with:
-        name: app-release
-        path: app/build/outputs/apk/release/*.apk
+        name: app-debug
+        path: app/build/outputs/apk/debug/*.apk
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: debug-${{ github.run_number }}
+        release_name: Debug Release ${{ github.run_number }}
+        draft: false
+        prerelease: true
+
+    - name: Upload APK to Release
+      uses: actions/upload-release-asset@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./app/build/outputs/apk/debug/*.apk
+        asset_name: app-debug.apk
+        asset_content_type: application/vnd.android.package-archive
