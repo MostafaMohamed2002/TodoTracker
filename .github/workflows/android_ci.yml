@@ -41,16 +41,17 @@ jobs:
         draft: false
         prerelease: true
 
-    - name: Upload APK to Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./app/build/outputs/apk/debug/*.apk
-        asset_name: app-debug.apk
-        asset_content_type: application/vnd.android.package-archive
-
     - name: Get current date
       id: get_date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        tag_name: debug-${{ steps.get_date.outputs.date }}  # Use the current date to create a unique tag
+        release_name: Debug Release ${{ steps.get_date.outputs.date }}
+        draft: false
+        prerelease: true
