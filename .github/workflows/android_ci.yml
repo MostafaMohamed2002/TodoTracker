@@ -31,17 +31,17 @@ jobs:
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v3
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: debug-${{ github.run_number }}
-        release_name: Debug Release ${{ github.run_number }}
+        tag_name: debug-${{ steps.get_date.outputs.date }}
+        release_name: Debug Release ${{ steps.get_date.outputs.date }}
         draft: false
         prerelease: true
 
     - name: Upload APK to Release
-      uses: actions/upload-release-asset@v2
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -49,3 +49,7 @@ jobs:
         asset_path: ./app/build/outputs/apk/debug/*.apk
         asset_name: app-debug.apk
         asset_content_type: application/vnd.android.package-archive
+
+    - name: Get current date
+      id: get_date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
