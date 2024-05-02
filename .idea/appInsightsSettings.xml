@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.mostafadevo.todoapp" />
+                  <option name="mobileSdkAppId" value="1:12666882213:android:489ca8c4b404c13275a54c" />
+                  <option name="projectId" value="todoapp-62b46" />
+                  <option name="projectNumber" value="12666882213" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

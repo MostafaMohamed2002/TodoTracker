@@ -2,6 +2,7 @@
     <string name="app_name">Todo App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_web_client_id">12666882213-ln8l5cajkh356oc78ee5m7obpnsghqc1.apps.googleusercontent.com</string>
     <string name="searchbar_hint">Enter Text To Search</string>
     <string-array name="priority_array">
         <item>High</item>

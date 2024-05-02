@@ -105,6 +105,9 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
     implementation ("androidx.fragment:fragment-ktx:1.3.6")
 
+    implementation (libs.play.services.auth)
+    implementation (libs.firebase.auth)
+
 
 
 }
