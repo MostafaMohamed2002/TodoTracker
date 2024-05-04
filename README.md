@@ -23,11 +23,13 @@ Todo Tracker is a robust Android application designed to help users effortlessly
 Include screenshots here to visually demonstrate the app's functionality and interface.
 
 
-![Home Screen Empty](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/e3048ec7-072c-4f15-be73-4150ec48fdb0)
-![Home Screen One Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/dafd6c94-13a5-420f-a3cc-3a9e33c4254c)
-![Add Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/47bd0fe9-b8dc-4a3a-ac3d-8139b612e795)
-![Update Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/1713b217-b7a1-4e6f-a6aa-08ce5e5a5a6f)
-## Tech Stack
+| Home Screen Empty          | Home Screen One Task          |
+| -------------------------- | ----------------------------- |
+| ![Home Screen Empty](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/e3048ec7-072c-4f15-be73-4150ec48fdb0) | ![Home Screen One Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/dafd6c94-13a5-420f-a3cc-3a9e33c4254c) |
+
+| Add Task                   | Update Task                   |
+| -------------------------- | ----------------------------- |
+| ![Add Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/47bd0fe9-b8dc-4a3a-ac3d-8139b612e795) | ![Update Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/1713b217-b7a1-4e6f-a6aa-08ce5e5a5a6f) |## Tech Stack
 - **Kotlin**: Utilizes modern Kotlin features for clean and concise code.
 - **MVVM** Architecture: Enhances separation of concerns, provides better scalability, and improves the maintainability of the application.
 - **Room** Database: Manages data persistence for storing tasks locally.
