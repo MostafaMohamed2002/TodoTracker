@@ -55,12 +55,6 @@ class listFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
 //        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
-        Toast.makeText(requireContext(), "Welcome ${viewModel.currentUser.toString()}", Toast.LENGTH_SHORT).show()
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        gsc = GoogleSignIn.getClient(requireContext(), gso)
         setupRecyclerView()
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
@@ -227,7 +221,8 @@ class listFragment : Fragment() {
                     viewModel.deleteAllTodos()
                 }
                 .show()
-        } else if (item.itemId == R.id.sort_by) {
+        }
+        else if (item.itemId == R.id.sort_by) {
             val sortBottomSheet = SortBottomSheetFragment()
             sortBottomSheet.show(childFragmentManager, sortBottomSheet.tag)
         } else if (item.itemId == R.id.logout) {
