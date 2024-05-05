@@ -10,13 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
-import com.mostafadevo.todo.data.viewmodel.TodoViewModel
+import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentAddBinding
 
 
 class addFragment : Fragment() {
     private lateinit var _binding: FragmentAddBinding
-    private val viewModel: TodoViewModel by viewModels()
+    private val viewModel: SharedTodoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

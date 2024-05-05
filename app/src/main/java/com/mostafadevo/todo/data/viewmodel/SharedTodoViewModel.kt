@@ -17,7 +17,7 @@ import com.mostafadevo.todo.data.repo.TodoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TodoViewModel(application: Application) : AndroidViewModel(application) {
+class SharedTodoViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val repository: TodoRepository

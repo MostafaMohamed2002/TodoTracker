@@ -13,13 +13,13 @@ import androidx.navigation.fragment.navArgs
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
-import com.mostafadevo.todo.data.viewmodel.TodoViewModel
+import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentUpdateBinding
 
 
 class updateFragment : Fragment() {
     private lateinit var _binding: FragmentUpdateBinding
-    private val mTodoViewModel: TodoViewModel by viewModels()
+    private val mSharedTodoViewModel: SharedTodoViewModel by viewModels()
     private val safeArgsData by navArgs<updateFragmentArgs>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class updateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding.updatePrioritySpinner.onItemSelectedListener =
-            mTodoViewModel.prioritySelectionListener
+            mSharedTodoViewModel.prioritySelectionListener
         logSafeArgsData()
         retreiveDataFromSafeArgs()
         saveUpdatedTodo()
@@ -57,7 +57,7 @@ class updateFragment : Fragment() {
                 description
             )
             // TODO: Validate Date Before updating
-            mTodoViewModel.updateTodo(updatedTodo)
+            mSharedTodoViewModel.updateTodo(updatedTodo)
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             Toast.makeText(requireContext(), "Todo Updated", Toast.LENGTH_SHORT)
                 .show()

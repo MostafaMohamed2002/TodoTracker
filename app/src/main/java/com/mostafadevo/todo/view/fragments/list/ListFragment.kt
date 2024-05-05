@@ -24,13 +24,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.viewmodel.TodoViewModel
+import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
 import com.mostafadevo.todo.view.login.LoginActivity
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding
-    private val viewModel: TodoViewModel by activityViewModels()
+    private val viewModel: SharedTodoViewModel by activityViewModels()
     private lateinit var gso: GoogleSignInOptions
     private lateinit var gsc: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +50,8 @@ class listFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val factory = TodoViewModel.TodoViewModelFactory(requireActivity().application)
-//        viewModel = ViewModelProvider(this, factory).get(TodoViewModel::class.java)
+//        val factory = SharedTodoViewModel.TodoViewModelFactory(requireActivity().application)
+//        viewModel = ViewModelProvider(this, factory).get(SharedTodoViewModel::class.java)
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()

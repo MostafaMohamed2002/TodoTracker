@@ -8,10 +8,10 @@ import android.widget.RadioGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.viewmodel.TodoViewModel
+import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 
 class SortBottomSheetFragment : BottomSheetDialogFragment() {
-    private val mTodoViewModel: TodoViewModel by activityViewModels()
+    private val mSharedTodoViewModel: SharedTodoViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +33,7 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun handleSort(sortType: String) {
-        mTodoViewModel.setSortType(sortType)
+        mSharedTodoViewModel.setSortType(sortType)
         dismiss()
     }
 }
