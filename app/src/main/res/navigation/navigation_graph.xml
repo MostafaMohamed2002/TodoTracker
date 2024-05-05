@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.mostafadevo.todo.fragments.list.listFragment"
+        android:name="com.mostafadevo.todo.view.fragments.list.listFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment"
@@ -23,18 +23,18 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.mostafadevo.todo.fragments.add.addFragment"
+        android:name="com.mostafadevo.todo.view.fragments.add.addFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.mostafadevo.todo.fragments.update.updateFragment"
+        android:name="com.mostafadevo.todo.view.fragments.update.updateFragment"
         android:label="fragment_update"
-        tools:layout="@layout/fragment_update" >
+        tools:layout="@layout/fragment_update">
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />

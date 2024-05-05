@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.fragments.update
+package com.mostafadevo.todo.view.fragments.update
 
 import android.os.Bundle
 import android.util.Log
@@ -36,7 +36,8 @@ class updateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.updatePrioritySpinner.onItemSelectedListener = mTodoViewModel.prioritySelectionListener
+        _binding.updatePrioritySpinner.onItemSelectedListener =
+            mTodoViewModel.prioritySelectionListener
         logSafeArgsData()
         retreiveDataFromSafeArgs()
         saveUpdatedTodo()

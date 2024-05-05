@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.fragments.list
+package com.mostafadevo.todo.view.fragments.list
 
 import android.os.Bundle
 import android.view.LayoutInflater

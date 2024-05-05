@@ -1,22 +1,25 @@
-package com.mostafadevo.todo
+package com.mostafadevo.todo.view.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.mostafadevo.todo.MainActivity
+import com.mostafadevo.todo.R
 import com.mostafadevo.todo.databinding.ActivityLoginBinding
+import com.mostafadevo.todo.view.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     companion object {
@@ -25,18 +28,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private lateinit var mFirebaseAuth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var _binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(_binding.root)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         mFirebaseAuth = Firebase.auth
         val currentUser = mFirebaseAuth.currentUser
 
@@ -52,16 +52,46 @@ class LoginActivity : AppCompatActivity() {
         }
 
         _binding.signinWithGoogle.setOnClickListener {
-            signInWithGoogle()
+            viewModel.signInWithGoogle()
         }
+
+        viewModel.signInIntent.observe(this, Observer { intent ->
+            startActivityForResult(intent, RC_SIGN_IN)
+        })
+
+
+        viewModel.loginStatus.observe(this) { isLoggedIn ->
+            if (isLoggedIn) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Invalid Email or Password",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        _binding.loginButton.setOnClickListener {
+            val email = _binding.emailTextinput.editText?.text.toString().trim()
+            val password = _binding.passwordTextinput.editText?.text.toString().trim()
+
+            // validate email and password and sign in in view model
+            viewModel.signInWithEmailAndPassword(email, password)
+        }
+
+
+        _binding.gotoSignupPageButton.setOnClickListener()
+        {
+            startActivity(Intent(this, SignUpActivity::class.java))
+
+
+        }
+
+        //on activity result for google sign in
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    //on activity result for google sign in
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
@@ -75,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.w(TAG, "Google sign in failed", e)
                 }
             } else {
-                Log.w(TAG, exception.toString())
+                Log.w(TAG, "onActivityResult Error :${exception.toString()}")
             }
         }
     }

@@ -21,4 +21,29 @@ object Utils {
             }
         }
     }
+
+    fun validateEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun validatePassword(password: String): Boolean {
+        return password.length >= 6
+    }
+
+    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
+    }
+
+
+    fun validateSignUp(email: String, password: String, confirmPassword: String): Boolean {
+        return validateEmail(email) && validatePassword(password) && validateConfirmPassword(
+            password,
+            confirmPassword
+        )
+    }
+
+    fun validateSignIn(email: String, password: String): Boolean {
+        return validateEmail(email) && validatePassword(password)
+    }
+
 }

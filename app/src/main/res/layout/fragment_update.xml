@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.update.updateFragment">
+    tools:context=".view.fragments.update.updateFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -36,8 +36,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:minHeight="48dp"
         android:entries="@array/priority_array"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="@+id/update_title_textinput"
         app:layout_constraintStart_toStartOf="@+id/update_title_textinput"
         app:layout_constraintTop_toBottomOf="@+id/update_title_textinput" />

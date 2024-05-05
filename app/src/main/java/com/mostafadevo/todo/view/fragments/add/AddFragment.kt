@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.fragments.add
+package com.mostafadevo.todo.view.fragments.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,7 +41,7 @@ class addFragment : Fragment() {
     }
 
     private fun changePrioritySpinnerColor() {
-        _binding.addPrioritySpinner.onItemSelectedListener=viewModel.prioritySelectionListener
+        _binding.addPrioritySpinner.onItemSelectedListener = viewModel.prioritySelectionListener
     }
 
     private fun addTodo() {

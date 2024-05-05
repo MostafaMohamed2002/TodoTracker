@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.fragments.list
+package com.mostafadevo.todo.view.fragments.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +14,12 @@ import com.mostafadevo.todo.data.model.Todo
 
 class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
     private var mList: List<Todo> = emptyList()
+
     //get the list of items
     fun getItems(): List<Todo> {
         return mList
     }
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -36,13 +38,14 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         // sets the text to the textview from our itemHolder class
         holder.titleTextView.text = itemInList.title
         holder.descriptionTextView.text = itemInList.description
-        when(itemInList.priority){
-            Priority.HIGH->holder.priorityImgView.setImageResource(R.drawable.priority_high)
-            Priority.MEDIUM->holder.priorityImgView.setImageResource(R.drawable.priority_mid)
-            Priority.LOW->holder.priorityImgView.setImageResource(R.drawable.priority_low)
+        when (itemInList.priority) {
+            Priority.HIGH -> holder.priorityImgView.setImageResource(R.drawable.priority_high)
+            Priority.MEDIUM -> holder.priorityImgView.setImageResource(R.drawable.priority_mid)
+            Priority.LOW -> holder.priorityImgView.setImageResource(R.drawable.priority_low)
         }
         holder.layout.setOnClickListener {
-            val navigationAction = listFragmentDirections.actionListFragmentToUpdateFragment(itemInList)
+            val navigationAction =
+                listFragmentDirections.actionListFragmentToUpdateFragment(itemInList)
             holder.layout.findNavController().navigate(navigationAction)
         }
 
@@ -56,12 +59,12 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.title_todo_textview)
-        val descriptionTextView:TextView = ItemView.findViewById(R.id.description_todo_textview)
-        val priorityImgView :ImageView = ItemView.findViewById(R.id.priority_todo_imgview)
-        val layout : ConstraintLayout= ItemView.findViewById(R.id.row_item_note_layout)
+        val descriptionTextView: TextView = ItemView.findViewById(R.id.description_todo_textview)
+        val priorityImgView: ImageView = ItemView.findViewById(R.id.priority_todo_imgview)
+        val layout: ConstraintLayout = ItemView.findViewById(R.id.row_item_note_layout)
     }
 
-    fun setData(todoList: List<Todo>){
+    fun setData(todoList: List<Todo>) {
         mList = todoList
         notifyDataSetChanged()
     }

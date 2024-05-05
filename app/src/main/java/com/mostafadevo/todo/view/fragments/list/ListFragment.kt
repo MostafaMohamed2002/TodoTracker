@@ -1,13 +1,10 @@
-package com.mostafadevo.todo.fragments.list
+package com.mostafadevo.todo.view.fragments.list
 
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -26,10 +23,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.mostafadevo.todo.LoginActivity
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.TodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
+import com.mostafadevo.todo.view.login.LoginActivity
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding
@@ -100,6 +97,8 @@ class listFragment : Fragment() {
                     viewModel.logout(gsc)
                     val intent = Intent(requireContext(), LoginActivity::class.java)
                     startActivity(intent)
+                    //remove all fragments from backstack
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
 
             }
@@ -221,5 +220,5 @@ class listFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(_binding.recyclerView)
 
     }
-    
+
 }
