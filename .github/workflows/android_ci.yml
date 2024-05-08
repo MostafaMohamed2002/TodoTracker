@@ -3,7 +3,7 @@ name: Android Debug Release
 on:
   push:
     branches:
-      - master  # Adjust this if you want to build on a different branch
+      - main  # Adjust this if you want to build on a different branch
 
 jobs:
   build_and_release:
