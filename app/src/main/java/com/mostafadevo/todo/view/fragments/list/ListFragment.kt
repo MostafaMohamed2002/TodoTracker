@@ -57,7 +57,7 @@ class listFragment : Fragment() {
             .requestEmail()
             .build()
         gsc = GoogleSignIn.getClient(requireContext(), gso)
-
+        handleFabShrinkAndExpand()
         setupSearchBarMenu()
         setupRecyclerView()
         _binding.createNewNoteFab.setOnClickListener {
@@ -65,6 +65,20 @@ class listFragment : Fragment() {
         }
         setupSearchFunction()
         (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+    }
+
+    private fun handleFabShrinkAndExpand() {
+        _binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // At top, extend the FAB
+                    _binding.createNewNoteFab.extend()
+                } else if (dy > 0 || dy < 0) {
+                    // User is scrolling, shrink the FAB
+                    _binding.createNewNoteFab.shrink()
+                }
+            }
+        })
     }
 
     private fun setupSearchBarMenu() {
