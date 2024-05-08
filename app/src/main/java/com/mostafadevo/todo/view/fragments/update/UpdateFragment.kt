@@ -38,6 +38,9 @@ class updateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding.updatePrioritySpinner.onItemSelectedListener =
             mSharedTodoViewModel.prioritySelectionListener
+        _binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
         logSafeArgsData()
         retreiveDataFromSafeArgs()
         saveUpdatedTodo()

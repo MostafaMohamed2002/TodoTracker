@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,15 +34,23 @@ class addFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+        _binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
 
-        _binding.addNoteButton.setOnClickListener {
+        }
+
+
+        _binding.addTodoFab.setOnClickListener {
             addTodo()
             //change priority spinner color based on selected item
         }
         changePrioritySpinnerColor()
+
     }
 
     private fun changePrioritySpinnerColor() {
+
         _binding.addPrioritySpinner.onItemSelectedListener = viewModel.prioritySelectionListener
     }
 
@@ -62,5 +71,6 @@ class addFragment : Fragment() {
             Toast.makeText(requireContext(), "Todo Added", Toast.LENGTH_SHORT).show()
         } else Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show()
     }
+
 
 }
