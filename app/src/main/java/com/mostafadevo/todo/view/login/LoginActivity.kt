@@ -39,9 +39,10 @@ class LoginActivity : AppCompatActivity() {
         if (isLoggedIn) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        } else {
-            setContentView(_binding.root)
         }
+
+        setContentView(_binding.root)
+
 
 
         mFirebaseAuth = Firebase.auth
