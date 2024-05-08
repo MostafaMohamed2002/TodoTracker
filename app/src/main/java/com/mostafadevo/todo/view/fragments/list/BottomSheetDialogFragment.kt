@@ -18,7 +18,17 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.bottom_sheet_sort, container, false)
         val sortOptionsGroup = view.findViewById<RadioGroup>(R.id.sort_options_group)
-
+        sortOptionsGroup.check(
+            when (mSharedTodoViewModel._sortType.value) {
+                "newest" -> R.id.sort_by_newest
+                "oldest" -> R.id.sort_by_oldest
+                "high priority" -> R.id.sort_by_high_priority
+                "low priority" -> R.id.sort_by_low_priority
+                "title A to Z" -> R.id.sort_by_title_az
+                "title Z to A" -> R.id.sort_by_title_za
+                else -> R.id.sort_by_newest
+            }
+        )
         sortOptionsGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.sort_by_newest -> handleSort("newest")
@@ -29,6 +39,8 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
                 R.id.sort_by_title_za -> handleSort("title Z to A")
             }
         }
+
+
         return view
     }
 
