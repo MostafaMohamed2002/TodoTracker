@@ -1,6 +1,7 @@
 package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -23,6 +24,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     private val repository: TodoRepository
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
     private lateinit var mFirebaseAuth: FirebaseAuth
+    val sharedPreferences: SharedPreferences = application.getSharedPreferences("LOGIN_STATUS", 0)
 
     val prioritySelectionListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
@@ -123,7 +125,13 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     fun logout(googleSignInClient: GoogleSignInClient) {
         mFirebaseAuth.signOut()
         googleSignInClient.signOut()
+        setUserLoggedIn(false)
     }
 
+    fun setUserLoggedIn(loggedIn: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("IS_LOGGED_IN", loggedIn)
+        editor.apply()
+    }
 
 }

@@ -34,21 +34,22 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
+        val isLoggedIn = viewModel.sharedPreferences.getBoolean("IS_LOGGED_IN", false)
+
+        if (isLoggedIn) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        } else {
+            setContentView(_binding.root)
+        }
 
 
         mFirebaseAuth = Firebase.auth
-        val currentUser = mFirebaseAuth.currentUser
-
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-        if (currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
         }
 
         _binding.signinWithGoogle.setOnClickListener {
@@ -76,17 +77,13 @@ class LoginActivity : AppCompatActivity() {
         _binding.loginButton.setOnClickListener {
             val email = _binding.emailTextinput.editText?.text.toString().trim()
             val password = _binding.passwordTextinput.editText?.text.toString().trim()
-
             // validate email and password and sign in in view model
             viewModel.signInWithEmailAndPassword(email, password)
         }
 
 
-        _binding.gotoSignupPageButton.setOnClickListener()
-        {
+        _binding.gotoSignupPageButton.setOnClickListener() {
             startActivity(Intent(this, SignUpActivity::class.java))
-
-
         }
 
         //on activity result for google sign in

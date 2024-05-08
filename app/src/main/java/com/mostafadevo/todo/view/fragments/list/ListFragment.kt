@@ -50,8 +50,6 @@ class listFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val factory = SharedTodoViewModel.TodoViewModelFactory(requireActivity().application)
-//        viewModel = ViewModelProvider(this, factory).get(SharedTodoViewModel::class.java)
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -110,9 +108,8 @@ class listFragment : Fragment() {
                 R.id.logout -> {
                     viewModel.logout(gsc)
                     val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                    //remove all fragments from backstack
-                    requireActivity().supportFragmentManager.popBackStack()
                 }
 
             }
