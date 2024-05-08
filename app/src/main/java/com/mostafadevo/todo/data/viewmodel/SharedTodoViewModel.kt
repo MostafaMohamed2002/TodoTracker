@@ -24,7 +24,6 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     private val repository: TodoRepository
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
     private lateinit var mFirebaseAuth: FirebaseAuth
-    val sharedPreferences: SharedPreferences = application.getSharedPreferences("LOGIN_STATUS", 0)
 
     val prioritySelectionListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
@@ -125,7 +124,6 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     fun logout(googleSignInClient: GoogleSignInClient) {
         mFirebaseAuth.signOut()
         googleSignInClient.signOut()
-        setUserLoggedIn(false)
     }
 
     fun setUserLoggedIn(loggedIn: Boolean) {

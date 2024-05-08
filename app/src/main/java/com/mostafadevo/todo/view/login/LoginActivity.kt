@@ -34,60 +34,59 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityLoginBinding.inflate(layoutInflater)
-        val isLoggedIn = viewModel.sharedPreferences.getBoolean("IS_LOGGED_IN", false)
-
-        if (isLoggedIn) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-
-        setContentView(_binding.root)
-
-
-
         mFirebaseAuth = Firebase.auth
-        enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        _binding.signinWithGoogle.setOnClickListener {
-            viewModel.signInWithGoogle()
-        }
-
-        viewModel.signInIntent.observe(this, Observer { intent ->
-            startActivityForResult(intent, RC_SIGN_IN)
-        })
-
-
-        viewModel.loginStatus.observe(this) { isLoggedIn ->
-            if (isLoggedIn) {
+        if (mFirebaseAuth.currentUser != null) {
+            if (mFirebaseAuth.currentUser?.isEmailVerified == true) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
-            } else {
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Invalid Email or Password",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
+            setContentView(_binding.root)
+
+
+
+            enableEdgeToEdge()
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
+
+            _binding.signinWithGoogle.setOnClickListener {
+                viewModel.signInWithGoogle()
+            }
+
+            viewModel.signInIntent.observe(this, Observer { intent ->
+                startActivityForResult(intent, RC_SIGN_IN)
+            })
+
+
+            viewModel.loginStatus.observe(this) { isLoggedIn ->
+                if (isLoggedIn) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Invalid Email or Password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            _binding.loginButton.setOnClickListener {
+                val email = _binding.emailTextinput.editText?.text.toString().trim()
+                val password = _binding.passwordTextinput.editText?.text.toString().trim()
+                // validate email and password and sign in in view model
+                viewModel.signInWithEmailAndPassword(email, password)
+            }
+
+
+            _binding.gotoSignupPageButton.setOnClickListener() {
+                startActivity(Intent(this, SignUpActivity::class.java))
+            }
+
+            //on activity result for google sign in
         }
-
-        _binding.loginButton.setOnClickListener {
-            val email = _binding.emailTextinput.editText?.text.toString().trim()
-            val password = _binding.passwordTextinput.editText?.text.toString().trim()
-            // validate email and password and sign in in view model
-            viewModel.signInWithEmailAndPassword(email, password)
-        }
-
-
-        _binding.gotoSignupPageButton.setOnClickListener() {
-            startActivity(Intent(this, SignUpActivity::class.java))
-        }
-
-        //on activity result for google sign in
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
