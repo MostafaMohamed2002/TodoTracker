@@ -12,6 +12,7 @@ import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentAddBinding
+import java.util.UUID
 
 
 class addFragment : Fragment() {
@@ -45,6 +46,7 @@ class addFragment : Fragment() {
     }
 
     private fun addTodo() {
+        val id = UUID.randomUUID().toString()
         val title = _binding.addTitleTextinput.editText?.text.toString()
         val description = _binding.addDescriptionTextinput.editText?.text.toString()
         val priority = _binding.addPrioritySpinner.selectedItem.toString()
@@ -53,7 +55,7 @@ class addFragment : Fragment() {
         if (isNotEmpty) {
             val parsedPriority = Utils.parsePriorityFromStringToEnum(priority)
             val newTodo = Todo(
-                0, title, parsedPriority, description
+                id, title, parsedPriority, description
             )
             viewModel.insertTodo(newTodo)
             findNavController().navigateUp()
