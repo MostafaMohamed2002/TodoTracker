@@ -1,7 +1,6 @@
 package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
-import android.content.SharedPreferences
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -126,10 +125,5 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
         googleSignInClient.signOut()
     }
 
-    fun setUserLoggedIn(loggedIn: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("IS_LOGGED_IN", loggedIn)
-        editor.apply()
-    }
 
 }
