@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -55,6 +56,7 @@ class listFragment : Fragment() {
             .requestEmail()
             .build()
         gsc = GoogleSignIn.getClient(requireContext(), gso)
+        handleBackButtonPressedWhenSearchViewIsOpen()
         handleFabShrinkAndExpand()
         setupSearchBarMenu()
         setupRecyclerView()
@@ -231,5 +233,19 @@ class listFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(_binding.recyclerView)
 
     }
+
+    fun handleBackButtonPressedWhenSearchViewIsOpen() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Handle the back button event
+                    if (_binding.searchView.isShowing) {
+                        _binding.searchView.hide()
+                    }
+                }
+            })
+    }
+
 
 }
