@@ -13,4 +13,6 @@ data class Todo(
     var priority: Priority,
     var description: String
 
-) : Parcelable
+) : Parcelable {
+    constructor() : this("", "", Priority.HIGH, "")
+}

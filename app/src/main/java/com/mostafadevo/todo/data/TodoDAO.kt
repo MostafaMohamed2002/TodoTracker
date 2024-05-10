@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.mostafadevo.todo.data.model.Todo
@@ -13,7 +14,7 @@ interface TodoDAO {
     @Query("select * from todo_table")
     fun getAllTodos(): LiveData<List<Todo>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTodo(todo: Todo)
 
     //delete all todos

@@ -1,10 +1,16 @@
 package com.mostafadevo.todo.data.repo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mostafadevo.todo.data.TodoDAO
+import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TodoRepository(private val todoDAO: TodoDAO) {
     private val TAG = "TodoRepository"
@@ -15,6 +21,51 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         .document(currentUser.toString())
         .collection("todos")
 
+    init {
+        //handle changes in firestore
+        fireStoreDB.addSnapshotListener { value, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+            value?.let {
+                for (doc in it.documentChanges) {
+                    val priority = when (doc.document["priority"]) {
+                        "HIGH" -> Priority.HIGH
+                        "MEDIUM" -> Priority.MEDIUM
+                        else -> Priority.LOW
+                    }
+                    val todo = Todo(
+                        doc.document["id"].toString(),
+                        doc.document["title"].toString(),
+                        priority,
+                        doc.document["description"].toString()
+                    )
+                    when (doc.type) {
+                        DocumentChange.Type.ADDED -> {
+                            Log.d(TAG, "ADDED")
+                            CoroutineScope(Dispatchers.IO).launch {
+                                todoDAO.insertTodo(todo)
+                            }
+                        }
+
+                        DocumentChange.Type.MODIFIED -> {
+                            Log.d(TAG, "MODIFIED")
+                            CoroutineScope(Dispatchers.IO).launch {
+                                todoDAO.updateTodo(todo)
+                            }
+                        }
+
+                        DocumentChange.Type.REMOVED -> {
+                            Log.d(TAG, "REMOVED")
+                            CoroutineScope(Dispatchers.IO).launch {
+                                todoDAO.deleteTodoItem(todo)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     suspend fun insertTodo(todo: Todo) {
         todoDAO.insertTodo(todo)
