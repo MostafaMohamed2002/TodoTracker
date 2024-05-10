@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.firebase.storage.ktx)
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
@@ -112,5 +114,7 @@ dependencies {
     // Firestore Kotlin extensions
     // Firebase Firestore
     implementation(libs.google.firebase.firestore)
+
+    implementation(libs.glide)
 
 }

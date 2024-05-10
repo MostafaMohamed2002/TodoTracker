@@ -24,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
@@ -56,6 +58,7 @@ class listFragment : Fragment() {
             .requestEmail()
             .build()
         gsc = GoogleSignIn.getClient(requireContext(), gso)
+        saveLoginData()
         handleBackButtonPressedWhenSearchViewIsOpen()
         handleFabShrinkAndExpand()
         setupSearchBarMenu()
@@ -65,6 +68,18 @@ class listFragment : Fragment() {
         }
         setupSearchFunction()
         (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+    }
+
+    private fun saveLoginData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        FirebaseFirestore.getInstance().collection("users").document(user?.uid.toString())
+            .set(
+                hashMapOf(
+                    "email" to user?.email,
+                    "name" to user?.displayName,
+                    "photo" to user?.photoUrl.toString()
+                )
+            )
     }
 
     private fun handleFabShrinkAndExpand() {
@@ -113,6 +128,11 @@ class listFragment : Fragment() {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
+                R.id.profile -> {
+                    findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+                }
+
 
             }
             true

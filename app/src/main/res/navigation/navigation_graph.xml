@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_listFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -42,4 +45,9 @@
             android:name="currentTodo"
             app:argType="com.mostafadevo.todo.data.model.Todo" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.mostafadevo.todo.view.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
