@@ -73,12 +73,12 @@ class listFragment : Fragment() {
     private fun saveLoginData() {
         val user = FirebaseAuth.getInstance().currentUser
         FirebaseFirestore.getInstance().collection("users").document(user?.uid.toString())
-            .set(
+            .update(
                 hashMapOf(
-                    "email" to user?.email,
-                    "name" to user?.displayName,
+                    "email" to user?.email.toString(),
+                    "name" to user?.displayName.toString(),
                     "photo" to user?.photoUrl.toString()
-                )
+                ) as Map<String, String>
             )
     }
 
