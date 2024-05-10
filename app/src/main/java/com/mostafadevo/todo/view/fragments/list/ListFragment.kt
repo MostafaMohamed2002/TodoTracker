@@ -242,6 +242,9 @@ class listFragment : Fragment() {
                     // Handle the back button event
                     if (_binding.searchView.isShowing) {
                         _binding.searchView.hide()
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
                     }
                 }
             })
