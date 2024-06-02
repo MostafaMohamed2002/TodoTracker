@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -23,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
@@ -50,14 +53,14 @@ class listFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val factory = SharedTodoViewModel.TodoViewModelFactory(requireActivity().application)
-//        viewModel = ViewModelProvider(this, factory).get(SharedTodoViewModel::class.java)
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         gsc = GoogleSignIn.getClient(requireContext(), gso)
-
+        saveLoginData()
+        handleBackButtonPressedWhenSearchViewIsOpen()
+        handleFabShrinkAndExpand()
         setupSearchBarMenu()
         setupRecyclerView()
         _binding.createNewNoteFab.setOnClickListener {
@@ -67,7 +70,37 @@ class listFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
     }
 
+    private fun saveLoginData() {
+        val user = FirebaseAuth.getInstance().currentUser
+        FirebaseFirestore.getInstance().collection("users").document(user?.uid.toString())
+            .update(
+                hashMapOf(
+                    "email" to user?.email.toString(),
+                    "name" to user?.displayName.toString(),
+                    "photo" to user?.photoUrl.toString()
+                ) as Map<String, String>
+            )
+    }
+
+    private fun handleFabShrinkAndExpand() {
+        _binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // At top, extend the FAB
+                    _binding.createNewNoteFab.extend()
+                } else if (dy > 0) {
+                    // User is scrolling, shrink the FAB
+                    _binding.createNewNoteFab.shrink()
+                } else if (dy < 0) {
+                    // User is scrolling up, extend the FAB
+                    _binding.createNewNoteFab.extend()
+                }
+            }
+        })
+    }
+
     private fun setupSearchBarMenu() {
+        _binding.searchBar.pointerIcon = null
         _binding.searchBar.inflateMenu(R.menu.menu_main)
         _binding.searchBar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -96,10 +129,14 @@ class listFragment : Fragment() {
                 R.id.logout -> {
                     viewModel.logout(gsc)
                     val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                    //remove all fragments from backstack
-                    requireActivity().supportFragmentManager.popBackStack()
                 }
+
+                R.id.profile -> {
+                    findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+                }
+
 
             }
             true
@@ -220,5 +257,22 @@ class listFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(_binding.recyclerView)
 
     }
+
+    fun handleBackButtonPressedWhenSearchViewIsOpen() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Handle the back button event
+                    if (_binding.searchView.isShowing) {
+                        _binding.searchView.hide()
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            })
+    }
+
 
 }

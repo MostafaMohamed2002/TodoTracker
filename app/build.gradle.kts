@@ -59,8 +59,11 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.firebase.auth)
     implementation(libs.androidx.annotation)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.firebase.storage.ktx)
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
@@ -99,15 +102,19 @@ dependencies {
     // If using Lifecycle-aware coroutines
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     // Assuming you are using Kotlin Coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
-    implementation ("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
 
-    implementation (libs.play.services.auth)
-    implementation (libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.firebase.auth)
 
+    // Firestore Kotlin extensions
+    // Firebase Firestore
+    implementation(libs.google.firebase.firestore)
 
+    implementation(libs.glide)
 
 }

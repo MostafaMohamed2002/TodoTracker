@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.login
+package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
 import android.content.Intent
@@ -36,6 +36,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             .build()
         mFirebaseAuth = FirebaseAuth.getInstance()
         googleSignInClient = GoogleSignIn.getClient(application, gso)
+
     }
 
     fun signInWithGoogle() {
@@ -58,4 +59,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 Log.w("LoginViewModel", "signInWithEmail:failure", e)
             }
     }
+
+
 }

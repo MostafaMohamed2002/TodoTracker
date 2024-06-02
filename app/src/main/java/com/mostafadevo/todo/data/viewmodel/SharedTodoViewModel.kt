@@ -123,6 +123,9 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     fun logout(googleSignInClient: GoogleSignInClient) {
         mFirebaseAuth.signOut()
         googleSignInClient.signOut()
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllLocalTodos()
+        }
     }
 
 
