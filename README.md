@@ -2,15 +2,53 @@
 
 ## Table of Contents
 - [Overview](#overview)
+- [Project File Structure](#project-file-structure)
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Tech Stack](#tech-stack)
 - [Usage](#usage)
 - [Contact](#contact)
 
 ## Overview
 Todo Tracker is a robust Android application designed to help users effortlessly manage their daily tasks. Developed with a focus on high usability and aesthetic design, Todo Tracker allows users to not just organize their tasks but also do it with style and efficiency.
 
+## Project File Structure
+```bash
+📁 todo
+    📁 data
+        📁 model
+            📄 Priority.kt
+            📄 Todo.kt
+        📁 repo
+            📄 ProfileRepository.kt
+            📄 TodoRepository.kt
+        📁 viewmodel
+            📄 LoginViewModel.kt
+            📄 ProfileViewModel.kt
+            📄 SharedTodoViewModel.kt
+            📄 SignUpViewModel.kt
+        📄 TodoDAO.kt
+        📄 TodoDataBase.kt
+        📄 TypeConverters.kt
+    📁 view
+        📁 fragments
+            📁 add
+                📄 AddFragment.kt
+            📁 list
+                📄 BottomSheetDialogFragment.kt
+                📄 ListFragment.kt
+                📄 ListNotesAdapter.kt
+            📁 profile
+                📄 ProfileFragment.kt
+            📁 update
+                📄 UpdateFragment.kt
+        📁 login
+            📄 LoginActivity.kt
+        📁 signup
+            📄 SignUpActivity.kt
+    📄 Application.kt
+    📄 MainActivity.kt
+    📄 Utils.kt
+```
 ## Features
 - **Task Prioritization:** Assign priority levels (High, Medium, Low) to tasks to manage your day effectively.
 - **Custom Categories:** Organize tasks into custom categories for better organization.
