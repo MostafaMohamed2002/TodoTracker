@@ -88,15 +88,19 @@ class listFragment : Fragment() {
                 if (!recyclerView.canScrollVertically(-1)) {
                     // At top, extend the FAB
                     _binding.createNewNoteFab.extend()
-                } else if (dy > 0 || dy < 0) {
+                } else if (dy > 0) {
                     // User is scrolling, shrink the FAB
                     _binding.createNewNoteFab.shrink()
+                } else if (dy < 0) {
+                    // User is scrolling up, extend the FAB
+                    _binding.createNewNoteFab.extend()
                 }
             }
         })
     }
 
     private fun setupSearchBarMenu() {
+        _binding.searchBar.pointerIcon = null
         _binding.searchBar.inflateMenu(R.menu.menu_main)
         _binding.searchBar.setOnMenuItemClickListener {
             when (it.itemId) {
