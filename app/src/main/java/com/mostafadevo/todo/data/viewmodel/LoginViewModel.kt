@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.login
+package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
 import android.content.Intent

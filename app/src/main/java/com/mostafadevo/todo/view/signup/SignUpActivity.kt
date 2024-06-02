@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputLayout
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
+import com.mostafadevo.todo.data.viewmodel.SignUpViewModel
 import com.mostafadevo.todo.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
