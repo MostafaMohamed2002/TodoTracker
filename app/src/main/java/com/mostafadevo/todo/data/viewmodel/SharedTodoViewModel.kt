@@ -1,6 +1,12 @@
 package com.mostafadevo.todo.data.viewmodel
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -10,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
+import com.mostafadevo.todo.NotificationReceiver
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
@@ -88,10 +95,12 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertTodo(todo)
         }
+        scheduleNotification(getApplication(), todo)
     }
 
     fun deleteAllTodos() {
         viewModelScope.launch(Dispatchers.IO) {
+            sortedData.value?.let { cancelAllNotifications(getApplication(), it) }
             repository.deleteAllTodos()
         }
     }
@@ -100,6 +109,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateTodo(todo)
         }
+        scheduleNotification(getApplication(), todo)
     }
 
     fun setSortType(newSortType: String) {
@@ -110,6 +120,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTodoItem(itemToDelete)
         }
+        cancelNotification(getApplication(), itemToDelete)
     }
 
     fun search(query: String) {
@@ -127,6 +138,37 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
             repository.deleteAllLocalTodos()
         }
     }
+    fun scheduleNotification(context: Context, todo: Todo) {
+        val intent = Intent(context, NotificationReceiver::class.java).apply {
+            putExtra("title", todo.title)
+            putExtra("message", todo.description)
+            putExtra("id", todo.id.hashCode())
+        }
 
+        val pendingIntent = PendingIntent.getBroadcast(context, todo.id.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        // setExact is used to set the alarm to before the exact time by 1 minute
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, todo.dateAndTime.time, pendingIntent)
+        Log.d(
+            "SharedTodoViewModel",
+            "scheduleNotification: ${todo.title} ${todo.description} ${todo.dateAndTime}"
+        )
+    }
+    //cancel notification if todo is deleted
+    fun cancelNotification(context: Context, todo: Todo) {
+        val intent = Intent(context, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, todo.id.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
+    }
+    //cancel all notifications
+    fun cancelAllNotifications(context: Context,todos: List<Todo>) {
+        todos.forEach {
+            val intent = Intent(context, NotificationReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, it.id.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
+        }
+    }
 
 }

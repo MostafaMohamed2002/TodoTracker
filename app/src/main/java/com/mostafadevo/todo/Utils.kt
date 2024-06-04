@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 
 object Utils {
+    const val CHANNEL_ID = "todo_channel"
+    const val CHANNEL_NAME = "Todo Reminder"
+    const val CHANNEL_DESCRIPTION = "channel for todo reminders"
+
     fun parsePriorityToInt(priority: Priority): Int {
         return when (priority) {
             Priority.HIGH -> 0
