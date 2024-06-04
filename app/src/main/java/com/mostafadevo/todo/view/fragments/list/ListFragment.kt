@@ -15,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -166,7 +167,19 @@ class listFragment : Fragment() {
         _binding.recyclerView.layoutAnimation = controller
         _binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = ListNotesAdapter()
-        _binding.recyclerView.adapter = adapter
+
+
+        adapter.onItemClick = {
+            val navigationAction =
+                listFragmentDirections.actionListFragmentToUpdateFragment(it)
+            findNavController().navigate(navigationAction)
+        }
+
+        adapter.onCheckBoxClick = {
+            viewModel.updateTodo(it)
+
+        }
+
         viewModel.sortedData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 _binding.emptyImageView.visibility = View.VISIBLE
@@ -180,7 +193,7 @@ class listFragment : Fragment() {
             Log.d("TodoActivity", "Received todos: $it")
         })
 
-
+        _binding.recyclerView.adapter = adapter
         // Create an instance of ItemTouchHelper.SimpleCallback to handle swipe gestures on RecyclerView items.
         val itemTouchHelperCallback =
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

@@ -10,11 +10,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
 
 class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
+
+    var onItemClick :((Todo) -> Unit)? = null
+    var onCheckBoxClick :((Todo) -> Unit)? = null
+
     private var mList: List<Todo> = emptyList()
 
     //get the list of items
@@ -61,9 +66,16 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
             )
         }
         holder.layout.setOnClickListener {
-            val navigationAction =
-                listFragmentDirections.actionListFragmentToUpdateFragment(itemInList)
-            holder.layout.findNavController().navigate(navigationAction)
+            onItemClick?.invoke(itemInList)
+        }
+
+        holder.checkbox.setOnCheckedChangeListener(null) //fix the bug of checkbox listener being called multiple times
+        holder.checkbox.isChecked = itemInList.isCompleted
+        holder.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            itemInList.isCompleted = isChecked
+            onCheckBoxClick?.invoke(itemInList)
+            // Notify item changed with payload to prevent rebinding and flashing.
+            notifyItemChanged(position, itemInList)
         }
 
     }
@@ -79,6 +91,7 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         val descriptionTextView: TextView = ItemView.findViewById(R.id.description_todo_textview)
         val todoCardView: MaterialCardView = ItemView.findViewById(R.id.todo_cardview)
         val layout: ConstraintLayout = ItemView.findViewById(R.id.row_item_note_layout)
+        val checkbox : MaterialCheckBox = ItemView.findViewById(R.id.todo_checkbox)
     }
 
     fun setData(todoList: List<Todo>) {
