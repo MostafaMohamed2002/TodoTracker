@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.mostafadevo.todo.R
+import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
 
@@ -77,7 +78,8 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
             // Notify item changed with payload to prevent rebinding and flashing.
             notifyItemChanged(position, itemInList)
         }
-
+        holder.dueDate.text = Utils.formatDate(itemInList.dateAndTime)
+        holder.dueTime.text = Utils.formatTime(itemInList.dateAndTime)
     }
 
     // return the number of the items in the list
@@ -92,6 +94,8 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         val todoCardView: MaterialCardView = ItemView.findViewById(R.id.todo_cardview)
         val layout: ConstraintLayout = ItemView.findViewById(R.id.row_item_note_layout)
         val checkbox : MaterialCheckBox = ItemView.findViewById(R.id.todo_checkbox)
+        val dueDate : TextView = ItemView.findViewById(R.id.due_date_textview)
+        val dueTime : TextView = ItemView.findViewById(R.id.duetime_textview)
     }
 
     fun setData(todoList: List<Todo>) {

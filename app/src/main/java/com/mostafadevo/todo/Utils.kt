@@ -1,6 +1,11 @@
 package com.mostafadevo.todo
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.mostafadevo.todo.data.model.Priority
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 object Utils {
     fun parsePriorityToInt(priority: Priority): Int {
@@ -34,16 +39,16 @@ object Utils {
         return password == confirmPassword
     }
 
-
-    fun validateSignUp(email: String, password: String, confirmPassword: String): Boolean {
-        return validateEmail(email) && validatePassword(password) && validateConfirmPassword(
-            password,
-            confirmPassword
-        )
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatDate(date: Date): String {
+        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        return localDate.format(formatter)
     }
 
-    fun validateSignIn(email: String, password: String): Boolean {
-        return validateEmail(email) && validatePassword(password)
+    fun formatTime(date: Date): String {
+        val formattedHours = if (date.hours < 10) "0${date.hours}" else "${date.hours}"
+        val formattedMinutes = if (date.minutes < 10) "0${date.minutes}" else "${date.minutes}"
+        return "$formattedHours:$formattedMinutes"
     }
-
 }

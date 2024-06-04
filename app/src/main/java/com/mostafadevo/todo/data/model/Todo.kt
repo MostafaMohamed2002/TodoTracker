@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @kotlinx.parcelize.Parcelize
 @Entity(tableName = "todo_table")
@@ -14,8 +15,10 @@ data class Todo(
     var priority: Priority,
     var description: String,
     @ColumnInfo(defaultValue = false.toString())
-    var isCompleted: Boolean
+    var isCompleted: Boolean,
+    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
+    var dateAndTime: Date
 
 ) : Parcelable {
-    constructor() : this("", "", Priority.HIGH, "", false)
+    constructor() : this("", "", Priority.HIGH, "", false, dateAndTime = Date())
 }

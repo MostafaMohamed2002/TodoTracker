@@ -10,20 +10,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentUpdateBinding
+import java.util.Calendar
+import java.util.Date
 
 
 class updateFragment : Fragment() {
     private lateinit var _binding: FragmentUpdateBinding
     private val mSharedTodoViewModel: SharedTodoViewModel by viewModels()
     private val safeArgsData by navArgs<updateFragmentArgs>()
+    private lateinit var mDate: Date
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        mDate = safeArgsData.currentTodo.dateAndTime
     }
 
     override fun onCreateView(
@@ -44,6 +50,49 @@ class updateFragment : Fragment() {
         logSafeArgsData()
         retreiveDataFromSafeArgs()
         saveUpdatedTodo()
+        handleDateAndTimePicker()
+    }
+
+    private fun handleDateAndTimePicker() {
+        _binding.updateDuedateInputlayout.editText?.isFocusable = false
+        _binding.updateDuetimeInputlayout.editText?.isFocusable = false
+        _binding.updateDuedateInputlayout.editText?.isClickable = true
+        _binding.updateDuetimeInputlayout.editText?.isClickable = true
+
+        _binding.updateDuedateInputlayout.editText?.setOnClickListener {
+            val datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select Date")
+                .setSelection(mDate.time)
+                .build()
+            datePicker.show(childFragmentManager, "Date Picker")
+            datePicker.addOnPositiveButtonClickListener {
+                mDate.date = datePicker.headerText.split(" ")[2].toInt()
+                Log.d("AddFragment", "date: $mDate")
+                _binding.updateDuedateInputlayout.editText?.setText(datePicker.headerText)
+            }
+
+        }
+        _binding.updateDuetimeInputlayout.editText?.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(mDate.hours)
+                .setMinute(mDate.minutes)
+                .setTitleText("Select Time")
+                .build()
+            timePicker.show(childFragmentManager, "Time Picker")
+            timePicker.addOnPositiveButtonClickListener {
+                val hour = timePicker.hour
+                val minute = timePicker.minute
+                mDate = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, hour)
+                    set(Calendar.MINUTE, minute)
+                }.time
+                Log.d("AddFragment", "date: $mDate")
+                _binding.updateDuetimeInputlayout.editText?.setText("$hour:$minute")
+
+            }
+
+        }
     }
 
     private fun saveUpdatedTodo() {
@@ -59,7 +108,8 @@ class updateFragment : Fragment() {
                 title,
                 priority,
                 description,
-                isCompleted
+                isCompleted,
+                mDate
             )
             // TODO: Validate Date Before updating
             mSharedTodoViewModel.updateTodo(updatedTodo)
@@ -75,6 +125,8 @@ class updateFragment : Fragment() {
             updateTitleTextinput.editText?.setText(safeArgsData.currentTodo.title)
             updateDescriptionTextinput.editText?.setText(safeArgsData.currentTodo.description)
             updatePrioritySpinner.setSelection(Utils.parsePriorityToInt(safeArgsData.currentTodo.priority))
+            updateDuedateInputlayout.editText?.setText(Utils.formatDate(safeArgsData.currentTodo.dateAndTime))
+            updateDuetimeInputlayout.editText?.setText(Utils.formatTime(safeArgsData.currentTodo.dateAndTime))
         }
     }
 
@@ -83,6 +135,8 @@ class updateFragment : Fragment() {
         Log.i("updateFragment", safeArgsData.currentTodo.title)
         Log.i("updateFragment", safeArgsData.currentTodo.priority.toString())
         Log.i("updateFragment", safeArgsData.currentTodo.description)
+        Log.i("updateFragment", safeArgsData.currentTodo.isCompleted.toString())
+        Log.i("updateFragment", safeArgsData.currentTodo.dateAndTime.toString())
     }
 
 }

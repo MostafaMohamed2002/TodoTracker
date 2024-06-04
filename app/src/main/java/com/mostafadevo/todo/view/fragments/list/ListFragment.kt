@@ -169,9 +169,9 @@ class listFragment : Fragment() {
         val adapter = ListNotesAdapter()
 
 
-        adapter.onItemClick = {
+        adapter.onItemClick = {todo->
             val navigationAction =
-                listFragmentDirections.actionListFragmentToUpdateFragment(it)
+                listFragmentDirections.actionListFragmentToUpdateFragment(todo)
             findNavController().navigate(navigationAction)
         }
 
