@@ -56,23 +56,44 @@ Todo Tracker is a robust Android application designed to help users effortlessly
 - **Intuitive Navigation:** Fluid navigation through a well-designed user interface and gesture controls.
 - **Search Functionality:** Quickly find tasks using the search feature.
 - **Dark Mode:** Supports dark mode to reduce eye strain in low light conditions.
+- **User Authentication:** Securely log in and sign up to access your tasks.
 
 ## Screenshots
 Include screenshots here to visually demonstrate the app's functionality and interface.
 
 
+| Login Screen          | Sign up screen          |
+| -------------------------- | ----------------------------- |
+| ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/c48cc7a9-0cd6-4604-afa4-6dde2263d6b0) | ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/1a493bf1-cc91-4989-9b0b-846d73a26190)
+ |
+
 | Home Screen Empty          | Home Screen One Task          |
 | -------------------------- | ----------------------------- |
-| ![Home Screen Empty](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/e3048ec7-072c-4f15-be73-4150ec48fdb0) | ![Home Screen One Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/dafd6c94-13a5-420f-a3cc-3a9e33c4254c) |
+| ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/f52a4517-1e06-44a2-8199-d0ee18567a35)| ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/30a8cc91-8f6b-45cc-afe5-1d44f8efccce)|
 
 | Add Task                   | Update Task                   |
 | -------------------------- | ----------------------------- |
-| ![Add Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/47bd0fe9-b8dc-4a3a-ac3d-8139b612e795) | ![Update Task](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/1713b217-b7a1-4e6f-a6aa-08ce5e5a5a6f) |## Tech Stack
+| ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/1d35faed-704f-4784-a2aa-614ffb1bf445) | ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/c4c886c1-ce7e-4a0e-8ea7-98de6ebda5ba) |
+
+| Delete All Tasks                   | Sort Tasks                   |
+| -------------------------- | ----------------------------- |
+|![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/06aa057f-8cf5-4bf8-92f3-4d0539b95ae7) | ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/8f2dc095-f615-47c4-a799-e4f8d4721781)
+ |
+
+| Material Date Picker | Material Time Picker         |
+| -------------------------- | ----------------------------- |
+|![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/4704d356-22d0-49f0-a930-599653bc149f)| ![image](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/0f9ac20d-ca81-4d3a-8d4f-3d19583e3c22) |
+
+
+## Tech Stack
 - **Kotlin**: Utilizes modern Kotlin features for clean and concise code.
 - **MVVM** Architecture: Enhances separation of concerns, provides better scalability, and improves the maintainability of the application.
 - **Room** Database: Manages data persistence for storing tasks locally.
 - **LiveData & ViewModel**: Ensures UI matches data state in real-time and manages data lifecycle efficiently.
 - **Coroutines**: Handles asynchronous tasks effectively, improving app performance.
+- **Material Design**: Implements Material Design principles for a visually appealing user interface.
+- **Navigation Component**: Simplifies the implementation of navigation between destinations.
+- **View Binding**: Replaces `findViewById` with a type-safe way to access views.
   
 ## Usage
 Here's how you can use Todo Tracker to boost your productivity:
