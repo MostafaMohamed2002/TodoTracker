@@ -64,7 +64,7 @@ class addFragment : Fragment() {
         if (isNotEmpty) {
             val parsedPriority = Utils.parsePriorityFromStringToEnum(priority)
             val newTodo = Todo(
-                id, title, parsedPriority, description
+                id, title, parsedPriority, description, isCompleted = false
             )
             viewModel.insertTodo(newTodo)
             findNavController().navigateUp()

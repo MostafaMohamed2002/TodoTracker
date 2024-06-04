@@ -23,6 +23,7 @@ class TodoRepository(private val todoDAO: TodoDAO) {
 
     init {
         //handle changes in firestore
+/*
         fireStoreDB.addSnapshotListener { value, error ->
             if (error != null) {
                 return@addSnapshotListener
@@ -65,6 +66,7 @@ class TodoRepository(private val todoDAO: TodoDAO) {
                 }
             }
         }
+*/
     }
 
     suspend fun insertTodo(todo: Todo) {

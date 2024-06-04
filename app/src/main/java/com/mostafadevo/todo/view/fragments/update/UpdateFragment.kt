@@ -53,11 +53,13 @@ class updateFragment : Fragment() {
             val priority =
                 Utils.parsePriorityFromStringToEnum(_binding.updatePrioritySpinner.selectedItem.toString())
             val id = safeArgsData.currentTodo.id
+            val isCompleted = safeArgsData.currentTodo.isCompleted
             val updatedTodo: Todo = Todo(
                 id,
                 title,
                 priority,
-                description
+                description,
+                isCompleted
             )
             // TODO: Validate Date Before updating
             mSharedTodoViewModel.updateTodo(updatedTodo)

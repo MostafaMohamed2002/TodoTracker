@@ -1,6 +1,7 @@
 package com.mostafadevo.todo.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,7 +9,15 @@ import androidx.room.TypeConverters
 import com.mostafadevo.todo.data.model.Todo
 
 @TypeConverters(Converters::class)
-@Database(entities = [Todo::class], version = 1, exportSchema = true)
+@Database(
+    entities = [Todo::class],
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ],
+
+    )
 abstract class TodoDataBase : RoomDatabase() {
     abstract fun todoDao(): TodoDAO
 
