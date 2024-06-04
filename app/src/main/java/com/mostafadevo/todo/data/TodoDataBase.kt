@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.mostafadevo.todo.data.model.Todo
 
 @TypeConverters(Converters::class)
-@Database(entities = [Todo::class], version = 1, exportSchema = false)
+@Database(entities = [Todo::class], version = 1, exportSchema = true)
 abstract class TodoDataBase : RoomDatabase() {
     abstract fun todoDao(): TodoDAO
 
