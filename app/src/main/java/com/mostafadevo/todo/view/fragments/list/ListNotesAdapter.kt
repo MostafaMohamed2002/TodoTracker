@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.model.Priority
 import com.mostafadevo.todo.data.model.Todo
@@ -39,9 +41,24 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         holder.titleTextView.text = itemInList.title
         holder.descriptionTextView.text = itemInList.description
         when (itemInList.priority) {
-            Priority.HIGH -> holder.priorityImgView.setImageResource(R.drawable.priority_high)
-            Priority.MEDIUM -> holder.priorityImgView.setImageResource(R.drawable.priority_mid)
-            Priority.LOW -> holder.priorityImgView.setImageResource(R.drawable.priority_low)
+            //set border color based on priority
+            Priority.HIGH -> holder.todoCardView.setStrokeColor(
+                holder.itemView.context.resources.getColor(
+                    R.color.priority_high
+                )
+            )
+
+            Priority.MEDIUM -> holder.todoCardView.setStrokeColor(
+                holder.itemView.context.resources.getColor(
+                    R.color.priority_medium
+                )
+            )
+
+            Priority.LOW -> holder.todoCardView.setStrokeColor(
+                holder.itemView.context.resources.getColor(
+                    R.color.priority_low
+                )
+            )
         }
         holder.layout.setOnClickListener {
             val navigationAction =
@@ -60,7 +77,7 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.title_todo_textview)
         val descriptionTextView: TextView = ItemView.findViewById(R.id.description_todo_textview)
-        val priorityImgView: ImageView = ItemView.findViewById(R.id.priority_todo_imgview)
+        val todoCardView: MaterialCardView = ItemView.findViewById(R.id.todo_cardview)
         val layout: ConstraintLayout = ItemView.findViewById(R.id.row_item_note_layout)
     }
 
