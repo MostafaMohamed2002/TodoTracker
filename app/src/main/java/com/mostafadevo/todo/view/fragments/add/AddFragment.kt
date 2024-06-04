@@ -60,7 +60,7 @@ class addFragment : Fragment() {
         val description = _binding.addDescriptionTextinput.editText?.text.toString()
         val priority = _binding.addPrioritySpinner.selectedItem.toString()
         //check if those text fields not empty
-        val isNotEmpty = title.isNotEmpty() == true && description.isNotEmpty() == true
+        val isNotEmpty = title.isNotEmpty() == true
         if (isNotEmpty) {
             val parsedPriority = Utils.parsePriorityFromStringToEnum(priority)
             val newTodo = Todo(
