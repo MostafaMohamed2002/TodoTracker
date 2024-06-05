@@ -23,7 +23,7 @@ Todo Tracker is a robust Android application designed to help users effortlessly
             📄 TodoRepository.kt
         📁 viewmodel
             📄 LoginViewModel.kt
-            📄 ProfileViewModel.kt
+            📄 SettingsViewModel.kt
             📄 SharedTodoViewModel.kt
             📄 SignUpViewModel.kt
         📄 TodoDAO.kt
@@ -38,7 +38,7 @@ Todo Tracker is a robust Android application designed to help users effortlessly
                 📄 ListFragment.kt
                 📄 ListNotesAdapter.kt
             📁 profile
-                📄 ProfileFragment.kt
+                📄 SettingsFragment.kt
             📁 update
                 📄 UpdateFragment.kt
         📁 login

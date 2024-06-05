@@ -62,13 +62,63 @@ class listFragment : Fragment() {
         saveLoginData()
         handleBackButtonPressedWhenSearchViewIsOpen()
         handleFabShrinkAndExpand()
-        setupSearchBarMenu()
         setupRecyclerView()
+        handleToolbarMenu()
         _binding.createNewNoteFab.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
         setupSearchFunction()
-        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+//        (activity as AppCompatActivity).setSupportActionBar(_binding.toolbar)
+    }
+
+    private fun handleToolbarMenu() {
+
+        _binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.search_icon -> {
+                    _binding.searchView.show()
+                }
+
+                R.id.logout -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes") { dialog, which ->
+                            viewModel.logout(gsc)
+                            val intent = Intent(requireContext(), LoginActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
+                        .setNegativeButton("No") { dialog, which ->
+
+                        }
+                        .show()
+                }
+
+                R.id.deleteall -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Delete All")
+                        .setMessage("Are you sure you want to delete all notes?")
+                        .setPositiveButton("Yes") { dialog, which ->
+                            viewModel.deleteAllTodos()
+                        }
+                        .setNegativeButton("No") { dialog, which ->
+
+                        }
+                        .show()
+                }
+
+                R.id.sort_by -> {
+                    val sortBottomSheet = SortBottomSheetFragment()
+                    sortBottomSheet.show(childFragmentManager, sortBottomSheet.tag)
+                }
+
+                R.id.profileFragment -> {
+                    findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+                }
+            }
+            true
+        }
     }
 
     private fun saveLoginData() {
@@ -100,49 +150,6 @@ class listFragment : Fragment() {
         })
     }
 
-    private fun setupSearchBarMenu() {
-        _binding.searchBar.pointerIcon = null
-        _binding.searchBar.inflateMenu(R.menu.menu_main)
-        _binding.searchBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.deleteall -> {
-                    //alert user that all notes have been deleted
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Delete All Todos")
-                        .setMessage("Are you sure ?\nOnce its delete There is no comeback")
-                        .setNegativeButton("No") { dialog, which ->
-                            // Respond to negative button press
-                        }
-                        .setPositiveButton("Yes") { dialog, which ->
-                            // Respond to positive button press
-                            viewModel.deleteAllTodos()
-                        }
-                        .show()
-
-                }
-
-                R.id.sort_by -> {
-                    val sortBottomSheet = SortBottomSheetFragment()
-                    sortBottomSheet.show(childFragmentManager, sortBottomSheet.tag)
-
-                }
-
-                R.id.logout -> {
-                    viewModel.logout(gsc)
-                    val intent = Intent(requireContext(), LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                }
-
-                R.id.profile -> {
-                    findNavController().navigate(R.id.action_listFragment_to_profileFragment)
-                }
-
-
-            }
-            true
-        }
-    }
 
     private fun setupSearchFunction() {
         val madapter = ListNotesAdapter()
@@ -169,7 +176,7 @@ class listFragment : Fragment() {
         val adapter = ListNotesAdapter()
 
 
-        adapter.onItemClick = {todo->
+        adapter.onItemClick = { todo ->
             val navigationAction =
                 listFragmentDirections.actionListFragmentToUpdateFragment(todo)
             findNavController().navigate(navigationAction)
@@ -194,6 +201,7 @@ class listFragment : Fragment() {
         })
 
         _binding.recyclerView.adapter = adapter
+
         // Create an instance of ItemTouchHelper.SimpleCallback to handle swipe gestures on RecyclerView items.
         val itemTouchHelperCallback =
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

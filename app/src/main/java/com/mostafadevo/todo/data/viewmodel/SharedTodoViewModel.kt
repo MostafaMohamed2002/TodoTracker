@@ -1,6 +1,5 @@
 package com.mostafadevo.todo.data.viewmodel
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.Application
 import android.app.PendingIntent
@@ -81,7 +80,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     init {
         repository = TodoRepository(todoDAO)
         _sortType.observeForever { newSortType ->
-            repository.getTodoSortedBy(newSortType).observeForever { sortedTodos ->
+            repository.getLocalTodoSortedBy(newSortType).observeForever { sortedTodos ->
                 sortedData.postValue(sortedTodos)
             }
         }
@@ -107,7 +106,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
 
     fun updateTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateTodo(todo)
+            repository.updateLocalTodo(todo)
         }
         scheduleNotification(getApplication(), todo)
     }
@@ -118,7 +117,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
 
     fun deleteTodoItem(itemToDelete: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteTodoItem(itemToDelete)
+            repository.deleteLocalTodo(itemToDelete)
         }
         cancelNotification(getApplication(), itemToDelete)
     }

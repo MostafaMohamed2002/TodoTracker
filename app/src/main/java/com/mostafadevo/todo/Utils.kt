@@ -12,6 +12,12 @@ object Utils {
     const val CHANNEL_NAME = "Todo Reminder"
     const val CHANNEL_DESCRIPTION = "channel for todo reminders"
 
+    const val FIREBASE_COLLECTION_NAME = "todos"
+    const val FIREBASE_USER_COLLECTION_NAME = "users"
+    const val FIREBASE_USER_NAME_FIELD = "name"
+    const val FIREBASE_USER_EMAIL_FIELD = "email"
+    const val FIREBASE_USER_IMAGE_URL_FIELD = "imageUrl"
+
     fun parsePriorityToInt(priority: Priority): Int {
         return when (priority) {
             Priority.HIGH -> 0
