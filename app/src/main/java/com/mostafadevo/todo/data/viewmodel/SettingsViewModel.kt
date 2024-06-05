@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mostafadevo.todo.data.TodoDataBase
+import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     private val todoDAO = TodoDataBase.getDatabase(application).todoDao()
     private val repository: TodoRepository = TodoRepository(todoDAO)
-
+    private var todosFromFirebase : List<Todo> = emptyList()
     private val _userName: MutableLiveData<String> = MutableLiveData()
     val userName: LiveData<String> = _userName
 
@@ -47,8 +48,22 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun pushTodosToFirebase(){}
-    fun getTodosFromFirebase(){}
+    fun pushTodosToFirebase(){
+        //how to handle success and failure
+        viewModelScope.launch(Dispatchers.IO){
+            repository.pushTodosToFirebase(repository.getAllTodos())
+        }
+    }
+    fun getTodosFromFirebase(){
+        viewModelScope.launch(Dispatchers.IO){
+            todosFromFirebase=repository.getTodosFromFirebase()
+            todosFromFirebase.forEach {
+                todoDAO.insertTodo(it)
+            }
+        }
+    }
 
-    fun setupFirebaseSync(){}
+    fun setupFirebaseSync(){
+        //todo: implement this
+    }
 }

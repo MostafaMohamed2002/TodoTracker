@@ -20,19 +20,15 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         val sortOptionsGroup = view.findViewById<RadioGroup>(R.id.sort_options_group)
         sortOptionsGroup.check(
             when (mSharedTodoViewModel._sortType.value) {
-                "newest" -> R.id.sort_by_newest
-                "oldest" -> R.id.sort_by_oldest
                 "high priority" -> R.id.sort_by_high_priority
                 "low priority" -> R.id.sort_by_low_priority
                 "title A to Z" -> R.id.sort_by_title_az
                 "title Z to A" -> R.id.sort_by_title_za
-                else -> R.id.sort_by_newest
+                else -> R.id.sort_by_title_az
             }
         )
         sortOptionsGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.sort_by_newest -> handleSort("newest")
-                R.id.sort_by_oldest -> handleSort("oldest")
                 R.id.sort_by_high_priority -> handleSort("high priority")
                 R.id.sort_by_low_priority -> handleSort("low priority")
                 R.id.sort_by_title_az -> handleSort("title A to Z")

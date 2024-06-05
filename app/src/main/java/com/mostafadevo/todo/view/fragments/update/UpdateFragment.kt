@@ -111,7 +111,7 @@ class updateFragment : Fragment() {
                 priority,
                 description,
                 isCompleted,
-                mDate
+                mDate,deleted = false
             )
             // TODO: Validate Date Before updating
             mSharedTodoViewModel.updateTodo(updatedTodo)

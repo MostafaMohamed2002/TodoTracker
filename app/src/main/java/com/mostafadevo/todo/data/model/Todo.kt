@@ -17,8 +17,10 @@ data class Todo(
     @ColumnInfo(defaultValue = false.toString())
     var isCompleted: Boolean,
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
-    var dateAndTime: Date
+    var dateAndTime: Date,
+    @ColumnInfo(defaultValue = false.toString())
+    var deleted : Boolean
 
 ) : Parcelable {
-    constructor() : this("", "", Priority.HIGH, "", false, dateAndTime = Date())
+    constructor() : this("", "", Priority.HIGH, "", false, dateAndTime = Date(),deleted = false)
 }

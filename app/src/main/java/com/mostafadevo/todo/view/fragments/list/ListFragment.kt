@@ -128,7 +128,7 @@ class listFragment : Fragment() {
                 hashMapOf(
                     "email" to user?.email.toString(),
                     "name" to user?.displayName.toString(),
-                    "photo" to user?.photoUrl.toString()
+                    "imageUrl" to user?.photoUrl.toString()
                 ) as Map<String, String>
             )
     }

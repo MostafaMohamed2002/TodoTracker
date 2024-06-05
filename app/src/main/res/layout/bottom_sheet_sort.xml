@@ -22,20 +22,6 @@
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/sort_by_newest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="Newest" />
-
-        <RadioButton
-            android:id="@+id/sort_by_oldest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="Oldest" />
-
-        <RadioButton
             android:id="@+id/sort_by_high_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

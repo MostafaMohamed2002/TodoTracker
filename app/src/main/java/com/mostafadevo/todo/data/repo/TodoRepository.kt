@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.getField
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.TodoDAO
 import com.mostafadevo.todo.data.model.Todo
@@ -17,6 +16,9 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         .collection(Utils.FIREBASE_USER_COLLECTION_NAME)
         .document(currentUser.toString())
 
+    suspend fun getAllTodos(): List<Todo> {
+        return todoDAO.getAllTodos()
+    }
 
     suspend fun getUserName(): String {
         return try {
@@ -60,13 +62,36 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         }
     }
 
+    suspend fun pushTodosToFirebase(todos: List<Todo>) {
+        try {
+            todos.forEach { todo ->
+                fireStoreDB.collection(Utils.FIREBASE_TODO_COLLECTION_NAME)
+                    .document(todo.id.toString())
+                    .set(todo)
+                    .await()
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "pushTodosToFirebase failed with ", e)
+        }
+    }
+
+    suspend fun getTodosFromFirebase(): List<Todo> {
+        return try {
+            val querySnapshot =
+                fireStoreDB.collection(Utils.FIREBASE_TODO_COLLECTION_NAME).get().await()
+            querySnapshot.toObjects(Todo::class.java)
+        } catch (e: Exception) {
+            Log.d(TAG, "getTodosFromFirebase failed with ", e)
+            emptyList()
+        }
+    }
+
     suspend fun insertTodo(todo: Todo) {
         todoDAO.insertTodo(todo)
     }
 
     suspend fun deleteAllTodos() {
         todoDAO.deleteAllTodos()
-
     }
 
     suspend fun updateLocalTodo(todo: Todo) {
@@ -75,18 +100,16 @@ class TodoRepository(private val todoDAO: TodoDAO) {
 
     fun getLocalTodoSortedBy(sortType: String): LiveData<List<Todo>> {
         return when (sortType) {
-            "newest" -> todoDAO.sortByNewest()
-            "oldest" -> todoDAO.sortByOldest()
             "high priority" -> todoDAO.sortByHighPriority()
             "low priority" -> todoDAO.sortByLowPriority()
             "title A to Z" -> todoDAO.sortByTitleAZ()
             "title Z to A" -> todoDAO.sortByTitleZA()
-            else -> todoDAO.sortByOldest()
+            else -> todoDAO.sortByTitleAZ()
         }
     }
 
     suspend fun deleteLocalTodo(itemToDelete: Todo) {
-        todoDAO.deleteTodoItem(itemToDelete) // delete from local db
+        todoDAO.deleteTodoItem(itemToDelete.id) // delete from local db
     }
 
     suspend fun search(query: String): LiveData<List<Todo>> {

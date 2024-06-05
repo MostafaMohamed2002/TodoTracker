@@ -72,7 +72,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-    val _sortType = MutableLiveData<String>("newest")
+    val _sortType = MutableLiveData<String>("title A to Z")
     val sortedData = MutableLiveData<List<Todo>>()
     val searchedTodos = MutableLiveData<List<Todo>>()
     var currentUser: String? = null

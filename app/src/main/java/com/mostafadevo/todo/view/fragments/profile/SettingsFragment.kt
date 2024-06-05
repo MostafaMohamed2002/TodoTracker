@@ -24,9 +24,6 @@ class SettingsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mSettingsViewModel.getUserName()
-        mSettingsViewModel.getUserEmail()
-        mSettingsViewModel.getUserImageUrl()
     }
 
     override fun onCreateView(
@@ -41,7 +38,22 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUserNameandEmailandLoadImage()
+        setupPushUpdatesToFirestore()
+        setupCloneCloudTodos()
+        handleBackButton()
 
+    }
+
+    private fun handleBackButton() {
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+    }
+
+    private fun setupCloneCloudTodos() {
+        binding.getUpdates.setOnClickListener {
+            mSettingsViewModel.getTodosFromFirebase()
+        }
     }
 
     private fun setupUserNameandEmailandLoadImage() {
@@ -78,6 +90,13 @@ class SettingsFragment : Fragment() {
         requireContext().theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
         return typedValue.data
     }
+
+    private fun setupPushUpdatesToFirestore() {
+        binding.pushUpdatesButton.setOnClickListener {
+            mSettingsViewModel.pushTodosToFirebase()
+        }
+    }
+
     private fun displayImage(imageView: ImageView, imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
