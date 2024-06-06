@@ -1,9 +1,11 @@
 package com.mostafadevo.todo.data.repo
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.TodoDAO
 import com.mostafadevo.todo.data.model.Todo
@@ -15,6 +17,8 @@ class TodoRepository(private val todoDAO: TodoDAO) {
     private val fireStoreDB = FirebaseFirestore.getInstance()
         .collection(Utils.FIREBASE_USER_COLLECTION_NAME)
         .document(currentUser.toString())
+    private val firebaseStorage = FirebaseStorage.getInstance()
+    private val storageReference = firebaseStorage.reference
 
     suspend fun getAllTodos(): List<Todo> {
         return todoDAO.getAllTodos()
@@ -66,7 +70,7 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         }
     }
 
-    suspend fun pushTodosToFirebase(todos: List<Todo> , deletedTodos:List<Todo>) {
+    suspend fun pushTodosToFirebase(todos: List<Todo>, deletedTodos: List<Todo>) {
         try {
             todos.forEach { todo ->
                 fireStoreDB.collection(Utils.FIREBASE_TODO_COLLECTION_NAME)
@@ -96,7 +100,6 @@ class TodoRepository(private val todoDAO: TodoDAO) {
             emptyList()
         }
     }
-
 
 
     suspend fun insertTodo(todo: Todo) {
@@ -131,5 +134,57 @@ class TodoRepository(private val todoDAO: TodoDAO) {
 
     fun deleteAllLocalTodos() {
         todoDAO.deleteAllTodos()
+    }
+
+    fun uploadImageToFirebase(picUri: Uri?) {
+        val imageReference =
+            storageReference.child("/users/${currentUser}/${picUri?.lastPathSegment}")
+        val uploadedImage = imageReference.putFile(picUri!!)
+        uploadedImage
+            .addOnSuccessListener {
+                imageReference.downloadUrl.addOnSuccessListener { link ->
+                    updateImageUrl(link.toString())
+                }
+            }
+            .addOnFailureListener {}
+    }
+
+    private fun updateImageUrl(imageUrl: String) {
+        fireStoreDB.update(
+            mapOf(
+                Utils.FIREBASE_USER_IMAGE_URL_FIELD to imageUrl
+            )
+        )
+            .addOnSuccessListener {
+                Log.d(TAG, "updateImageUrl: success")
+            }.addOnFailureListener {
+                Log.d(TAG, "updateImageUrl: failed")
+            }
+    }
+
+    fun updateUserName(newUserName: String) {
+        fireStoreDB.update(
+            mapOf(
+                Utils.FIREBASE_USER_NAME_FIELD to newUserName
+            )
+        )
+            .addOnSuccessListener {
+                Log.d(TAG, "updateUserName: success")
+            }.addOnFailureListener {
+                Log.d(TAG, "updateUserName: failed")
+            }
+    }
+
+    fun saveUserEmail(currentUserEmail: String?) {
+        fireStoreDB.update(
+            mapOf(
+                Utils.FIREBASE_USER_EMAIL_FIELD to currentUserEmail
+            )
+        )
+            .addOnSuccessListener {
+                Log.d(TAG, "saveUserEmail: success")
+            }.addOnFailureListener {
+                Log.d(TAG, "saveUserEmail: failed")
+            }
     }
 }

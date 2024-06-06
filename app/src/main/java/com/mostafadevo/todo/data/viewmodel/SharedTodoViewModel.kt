@@ -75,7 +75,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
     val _sortType = MutableLiveData<String>("title A to Z")
     val sortedData = MutableLiveData<List<Todo>>()
     val searchedTodos = MutableLiveData<List<Todo>>()
-    var currentUser: String? = null
+    var currentUserEmail: String? = null
 
     init {
         repository = TodoRepository(todoDAO)
@@ -85,7 +85,7 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
             }
         }
         mFirebaseAuth = FirebaseAuth.getInstance()
-        currentUser = mFirebaseAuth.currentUser?.displayName
+        currentUserEmail = mFirebaseAuth.currentUser?.email
     }
 
 
@@ -167,6 +167,12 @@ class SharedTodoViewModel(application: Application) : AndroidViewModel(applicati
             val pendingIntent = PendingIntent.getBroadcast(context, it.id.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
+        }
+    }
+
+    fun saveUserEmail() {
+        viewModelScope.launch {
+            repository.saveUserEmail(currentUserEmail)
         }
     }
 

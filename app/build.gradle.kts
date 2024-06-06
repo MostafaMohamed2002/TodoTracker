@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.appcheck.playintegrity)
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")

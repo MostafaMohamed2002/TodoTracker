@@ -27,6 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mostafadevo.todo.NotificationReceiver
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
@@ -122,15 +123,7 @@ class listFragment : Fragment() {
     }
 
     private fun saveLoginData() {
-        val user = FirebaseAuth.getInstance().currentUser
-        FirebaseFirestore.getInstance().collection("users").document(user?.uid.toString())
-            .update(
-                hashMapOf(
-                    "email" to user?.email.toString(),
-                    "name" to user?.displayName.toString(),
-                    "imageUrl" to user?.photoUrl.toString()
-                ) as Map<String, String>
-            )
+        viewModel.saveUserEmail()
     }
 
     private fun handleFabShrinkAndExpand() {
