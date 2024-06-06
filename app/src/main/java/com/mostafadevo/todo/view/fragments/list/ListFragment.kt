@@ -182,9 +182,11 @@ class listFragment : Fragment() {
             findNavController().navigate(navigationAction)
         }
 
-        adapter.onCheckBoxClick = {
-            viewModel.updateTodo(it)
-
+        adapter.onCheckBoxClick = {todo, isChecked ->
+            viewModel.updateTodo(todo)
+            if (isChecked){
+                viewModel.cancelNotification(requireContext(), todo)
+            }
         }
 
         viewModel.sortedData.observe(viewLifecycleOwner, Observer {

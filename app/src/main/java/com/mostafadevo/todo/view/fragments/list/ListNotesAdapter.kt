@@ -19,7 +19,7 @@ import com.mostafadevo.todo.data.model.Todo
 class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
 
     var onItemClick :((Todo) -> Unit)? = null
-    var onCheckBoxClick :((Todo) -> Unit)? = null
+    var onCheckBoxClick :((Todo , isChecked:Boolean) -> Unit)? = null
 
     private var mList: List<Todo> = emptyList()
 
@@ -74,7 +74,7 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         holder.checkbox.isChecked = itemInList.isCompleted
         holder.checkbox.setOnCheckedChangeListener { _, isChecked ->
             itemInList.isCompleted = isChecked
-            onCheckBoxClick?.invoke(itemInList)
+            onCheckBoxClick?.invoke(itemInList,isChecked)
             // Notify item changed with payload to prevent rebinding and flashing.
             notifyItemChanged(position, itemInList)
         }
