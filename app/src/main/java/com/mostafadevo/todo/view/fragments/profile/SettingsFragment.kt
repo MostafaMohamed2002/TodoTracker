@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.mostafadevo.todo.R
+import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.viewmodel.SettingsViewModel
 import com.mostafadevo.todo.databinding.FragmentSettingsBinding
 
@@ -21,7 +22,9 @@ class SettingsFragment : Fragment() {
     private val REQUEST_CODE = 1000
     private lateinit var binding: FragmentSettingsBinding
     private val mSettingsViewModel: SettingsViewModel by activityViewModels()
-
+    private val sharedPreferences by lazy {
+        requireActivity().getSharedPreferences(Utils.SHARED_PREF_NAME, Activity.MODE_PRIVATE)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,7 +44,22 @@ class SettingsFragment : Fragment() {
         setupPushUpdatesToFirestore()
         setupCloneCloudTodos()
         handleBackButton()
+        handleSwitchButtonForFirebaseSync()
+    }
 
+    private fun handleSwitchButtonForFirebaseSync() {
+        binding.enableSyncingSwitch.isChecked = sharedPreferences.getBoolean(Utils.FIREBASE_SYNC_ENABLED, false)
+        binding.enableSyncingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            sharedPreferences.edit().apply {
+                putBoolean(Utils.FIREBASE_SYNC_ENABLED, isChecked)
+                    .apply()
+            }
+            if (isChecked) {
+                mSettingsViewModel.startFirebaseSyncService()
+            } else {
+                mSettingsViewModel.stopFirebaseSyncService()
+            }
+        }
     }
 
     private fun handleBackButton() {

@@ -63,13 +63,13 @@
         android:stateListAnimator="@null"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            style="?attr/collapsingToolbarLayoutMediumStyle"
+            style="?attr/collapsingToolbarLayoutLargeStyle"
             android:layout_width="match_parent"
             app:collapsedTitleTextAppearance="@style/CollapsedAppBarTextAppearance"
             app:expandedTitleTextAppearance="@style/ExpandedAppBarTextAppearance"
             app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            android:layout_height="?attr/collapsingToolbarLayoutLargeSize">
+            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

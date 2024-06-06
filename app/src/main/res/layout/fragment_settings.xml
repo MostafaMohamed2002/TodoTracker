@@ -113,6 +113,26 @@
             app:layout_constraintStart_toStartOf="@+id/divider2"
             app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@+id/get_updates"
+            app:layout_constraintStart_toStartOf="@+id/get_updates"
+            app:layout_constraintTop_toBottomOf="@+id/get_updates" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/enable_syncing_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Enable Midnight Syncing"
+            app:layout_constraintEnd_toEndOf="@+id/divider3"
+            app:layout_constraintStart_toStartOf="@+id/divider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -127,7 +147,7 @@
             app:expandedTitleTextAppearance="@style/ExpandedAppBarTextAppearance"
             app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            android:layout_height="?attr/collapsingToolbarLayoutLargeSize">
+            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

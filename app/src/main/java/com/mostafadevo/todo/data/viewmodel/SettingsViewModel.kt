@@ -1,10 +1,14 @@
 package com.mostafadevo.todo.data.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.mostafadevo.todo.FirebaseSyncWorker
 import com.mostafadevo.todo.data.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
@@ -51,7 +55,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun pushTodosToFirebase(){
         //how to handle success and failure
         viewModelScope.launch(Dispatchers.IO){
-            repository.pushTodosToFirebase(repository.getAllTodos())
+            repository.pushTodosToFirebase(repository.getAllTodos(),repository.getAllDeletedTodos())
         }
     }
     fun getTodosFromFirebase(){
@@ -63,7 +67,15 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun setupFirebaseSync(){
-        //todo: implement this
+    fun startFirebaseSyncService() {
+        FirebaseSyncWorker.schedule(getApplication())
+        Log.d("SettingsViewModel", "startFirebaseSyncService")
+    }
+
+    fun stopFirebaseSyncService() {
+        val context = getApplication<Application>().applicationContext
+        val workManager = androidx.work.WorkManager.getInstance(context)
+        workManager.cancelUniqueWork(FirebaseSyncWorker.WORK_NAME)
+        Log.d("SettingsViewModel", "stopFirebaseSyncService")
     }
 }

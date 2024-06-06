@@ -20,6 +20,10 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         return todoDAO.getAllTodos()
     }
 
+    suspend fun getAllDeletedTodos(): List<Todo> {
+        return todoDAO.getAllDeletedTodos()
+    }
+
     suspend fun getUserName(): String {
         return try {
             val document = fireStoreDB.get().await()
@@ -62,7 +66,7 @@ class TodoRepository(private val todoDAO: TodoDAO) {
         }
     }
 
-    suspend fun pushTodosToFirebase(todos: List<Todo>) {
+    suspend fun pushTodosToFirebase(todos: List<Todo> , deletedTodos:List<Todo>) {
         try {
             todos.forEach { todo ->
                 fireStoreDB.collection(Utils.FIREBASE_TODO_COLLECTION_NAME)
@@ -70,6 +74,13 @@ class TodoRepository(private val todoDAO: TodoDAO) {
                     .set(todo)
                     .await()
             }
+            deletedTodos.forEach { todo ->
+                fireStoreDB.collection(Utils.FIREBASE_TODO_COLLECTION_NAME)
+                    .document(todo.id.toString())
+                    .delete()
+                    .await()
+            }
+
         } catch (e: Exception) {
             Log.d(TAG, "pushTodosToFirebase failed with ", e)
         }
@@ -85,6 +96,8 @@ class TodoRepository(private val todoDAO: TodoDAO) {
             emptyList()
         }
     }
+
+
 
     suspend fun insertTodo(todo: Todo) {
         todoDAO.insertTodo(todo)

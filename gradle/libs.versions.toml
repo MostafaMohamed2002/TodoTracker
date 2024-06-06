@@ -28,9 +28,11 @@ firebaseFirestoreKtxVersion = "25.0.0"
 legacySupportV4 = "1.0.0"
 fragmentKtx = "1.7.0"
 firebaseStorageKtx = "21.0.0"
+workRuntimeKtx = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestoreVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

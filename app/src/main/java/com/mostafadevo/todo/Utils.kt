@@ -1,5 +1,6 @@
 package com.mostafadevo.todo
 
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.mostafadevo.todo.data.model.Priority
@@ -11,12 +12,15 @@ object Utils {
     const val CHANNEL_ID = "todo_channel"
     const val CHANNEL_NAME = "Todo Reminder"
     const val CHANNEL_DESCRIPTION = "channel for todo reminders"
-
     const val FIREBASE_TODO_COLLECTION_NAME = "todos"
     const val FIREBASE_USER_COLLECTION_NAME = "users"
+
     const val FIREBASE_USER_NAME_FIELD = "name"
     const val FIREBASE_USER_EMAIL_FIELD = "email"
     const val FIREBASE_USER_IMAGE_URL_FIELD = "imageUrl"
+
+    const val SHARED_PREF_NAME = "todo_pref"
+    const val FIREBASE_SYNC_ENABLED = "firebase_sync_enabled"
 
     fun parsePriorityToInt(priority: Priority): Int {
         return when (priority) {

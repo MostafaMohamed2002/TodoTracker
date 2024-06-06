@@ -14,6 +14,9 @@ interface TodoDAO {
     @Query("select * from todo_table WHERE deleted = 0")
     fun getAllTodos(): List<Todo>
 
+    @Query("select * from todo_table WHERE deleted = 1")
+    fun getAllDeletedTodos(): List<Todo>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTodo(todo: Todo)
 
@@ -46,6 +49,7 @@ interface TodoDAO {
     @Query("SELECT * FROM todo_table where deleted=0 ORDER BY title DESC")
     fun sortByTitleZA(): LiveData<List<Todo>>
 
+    //delete todo item meaning mark it as deleted
     @Query("update todo_table set deleted = 1 where id = :itemToDelete")
     fun deleteTodoItem(itemToDelete: String)
 

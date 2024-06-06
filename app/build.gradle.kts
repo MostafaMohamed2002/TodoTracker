@@ -123,4 +123,7 @@ dependencies {
 
     implementation(libs.glide)
 
+    implementation (libs.androidx.work.runtime.ktx)
+
+
 }
