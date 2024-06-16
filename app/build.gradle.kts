@@ -8,6 +8,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("/home/mostafadevo/Documents/keystores/todo_tracker_keystore.jks")
+            storePassword = "53463562"
+            keyAlias = "key0"
+            keyPassword = "53463562"
+        }
+    }
     namespace = "com.mostafadevo.todo"
     compileSdk = 34
 
@@ -19,6 +27,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("debug")
 
         javaCompileOptions {
             annotationProcessorOptions {

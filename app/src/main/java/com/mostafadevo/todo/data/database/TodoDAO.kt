@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data
+package com.mostafadevo.todo.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -36,17 +36,17 @@ interface TodoDAO {
         title a z
         title z a
     */
-    @Query("SELECT * FROM todo_table where deleted=0 ORDER BY CASE priority WHEN 'LOW' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'HIGH' THEN 3 ELSE 4 END ASC")
+    @Query("SELECT * FROM todo_table where deleted=0 AND isCompleted = 0 ORDER BY CASE priority WHEN 'LOW' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'HIGH' THEN 3 ELSE 4 END ASC")
     fun sortByLowPriority(): LiveData<List<Todo>>
 
-    @Query("SELECT * FROM todo_table where deleted=0 ORDER BY CASE priority WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'LOW' THEN 3 ELSE 4 END ASC")
+    @Query("SELECT * FROM todo_table where deleted=0 AND isCompleted = 0 ORDER BY CASE priority WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'LOW' THEN 3 ELSE 4 END ASC")
     fun sortByHighPriority(): LiveData<List<Todo>>
 
 
-    @Query("SELECT * FROM todo_table where deleted=0 ORDER BY title ASC")
+    @Query("SELECT * FROM todo_table where deleted=0 AND isCompleted = 0 ORDER BY title ASC")
     fun sortByTitleAZ(): LiveData<List<Todo>>
 
-    @Query("SELECT * FROM todo_table where deleted=0 ORDER BY title DESC")
+    @Query("SELECT * FROM todo_table where deleted=0 AND isCompleted = 0 ORDER BY title DESC")
     fun sortByTitleZA(): LiveData<List<Todo>>
 
     //delete todo item meaning mark it as deleted

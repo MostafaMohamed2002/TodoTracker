@@ -27,10 +27,10 @@
             android:exported="true"></receiver>
 
         <activity
-            android:name=".view.signup.SignUpActivity"
+            android:name=".presentation.signup.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"></activity>
 
         <meta-data

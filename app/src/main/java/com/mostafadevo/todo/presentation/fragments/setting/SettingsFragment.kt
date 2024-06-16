@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.fragments.profile
+package com.mostafadevo.todo.presentation.fragments.setting
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
-import com.mostafadevo.todo.data.viewmodel.SettingsViewModel
 import com.mostafadevo.todo.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {

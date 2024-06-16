@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data
+package com.mostafadevo.todo.data.database
 
 import androidx.room.TypeConverter
 import com.mostafadevo.todo.data.model.Priority

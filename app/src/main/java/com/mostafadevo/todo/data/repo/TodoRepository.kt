@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.mostafadevo.todo.Utils
-import com.mostafadevo.todo.data.TodoDAO
+import com.mostafadevo.todo.data.database.TodoDAO
 import com.mostafadevo.todo.data.model.Todo
 import kotlinx.coroutines.tasks.await
 

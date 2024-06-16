@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data.viewmodel
+package com.mostafadevo.todo.presentation
 
 import android.app.AlarmManager
 import android.app.Application
@@ -17,7 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.mostafadevo.todo.NotificationReceiver
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.TodoDataBase
+import com.mostafadevo.todo.data.database.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
 import kotlinx.coroutines.Dispatchers

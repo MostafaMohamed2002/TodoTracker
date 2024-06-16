@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data.viewmodel
+package com.mostafadevo.todo.presentation.fragments.setting
 
 import android.app.Application
 import android.net.Uri
@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mostafadevo.todo.FirebaseSyncWorker
-import com.mostafadevo.todo.data.TodoDataBase
+import com.mostafadevo.todo.data.database.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
 import kotlinx.coroutines.Dispatchers
