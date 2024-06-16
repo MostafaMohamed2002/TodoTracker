@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.1"
+agp = "8.4.0-alpha05"
 firebaseFirestoreKtx = "24.0.1"
 firebaseFirestoreVersion = "25.0.0"
 glide = "4.14.2"
@@ -29,6 +29,7 @@ legacySupportV4 = "1.0.0"
 fragmentKtx = "1.7.0"
 firebaseStorageKtx = "21.0.0"
 workRuntimeKtx = "2.9.0"
+firebaseAppcheckPlayintegrity = "18.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +58,7 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

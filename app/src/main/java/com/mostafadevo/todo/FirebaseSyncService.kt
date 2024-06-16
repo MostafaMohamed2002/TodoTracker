@@ -1,23 +1,17 @@
 package com.mostafadevo.todo
 
-import android.app.Service
 import android.content.Context
-import android.content.Intent
-import android.os.IBinder
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mostafadevo.todo.data.TodoDataBase
+import com.mostafadevo.todo.data.database.TodoDataBase
 import com.mostafadevo.todo.data.model.Todo
 import com.mostafadevo.todo.data.repo.TodoRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 

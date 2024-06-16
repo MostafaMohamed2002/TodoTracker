@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.login
+package com.mostafadevo.todo.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,11 +14,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.mostafadevo.todo.MainActivity
+import com.mostafadevo.todo.presentation.MainActivity
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.viewmodel.LoginViewModel
 import com.mostafadevo.todo.databinding.ActivityLoginBinding
-import com.mostafadevo.todo.view.signup.SignUpActivity
+import com.mostafadevo.todo.presentation.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     companion object {

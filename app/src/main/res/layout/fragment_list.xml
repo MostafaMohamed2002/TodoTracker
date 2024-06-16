@@ -5,7 +5,7 @@
     android:id="@+id/list_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.list.listFragment">
+    tools:context=".presentation.fragments.list.listFragment">
 
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->

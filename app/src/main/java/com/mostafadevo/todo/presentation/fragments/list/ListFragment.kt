@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.fragments.list
+package com.mostafadevo.todo.presentation.fragments.list
 
 import android.content.Intent
 import android.graphics.Canvas
@@ -10,12 +10,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,12 +23,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
+import com.mostafadevo.todo.presentation.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentListBinding
-import com.mostafadevo.todo.view.login.LoginActivity
+import com.mostafadevo.todo.presentation.login.LoginActivity
 
 class listFragment : Fragment() {
     private lateinit var _binding: FragmentListBinding
@@ -122,15 +118,7 @@ class listFragment : Fragment() {
     }
 
     private fun saveLoginData() {
-        val user = FirebaseAuth.getInstance().currentUser
-        FirebaseFirestore.getInstance().collection("users").document(user?.uid.toString())
-            .update(
-                hashMapOf(
-                    "email" to user?.email.toString(),
-                    "name" to user?.displayName.toString(),
-                    "imageUrl" to user?.photoUrl.toString()
-                ) as Map<String, String>
-            )
+        viewModel.saveUserEmail()
     }
 
     private fun handleFabShrinkAndExpand() {
@@ -182,9 +170,11 @@ class listFragment : Fragment() {
             findNavController().navigate(navigationAction)
         }
 
-        adapter.onCheckBoxClick = {
-            viewModel.updateTodo(it)
-
+        adapter.onCheckBoxClick = {todo, isChecked ->
+            viewModel.updateTodo(todo)
+            if (isChecked){
+                viewModel.cancelNotification(requireContext(), todo)
+            }
         }
 
         viewModel.sortedData.observe(viewLifecycleOwner, Observer {

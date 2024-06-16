@@ -1,13 +1,10 @@
-package com.mostafadevo.todo.view.fragments.list
+package com.mostafadevo.todo.presentation.fragments.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -19,7 +16,7 @@ import com.mostafadevo.todo.data.model.Todo
 class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
 
     var onItemClick :((Todo) -> Unit)? = null
-    var onCheckBoxClick :((Todo) -> Unit)? = null
+    var onCheckBoxClick :((Todo , isChecked:Boolean) -> Unit)? = null
 
     private var mList: List<Todo> = emptyList()
 
@@ -74,7 +71,7 @@ class ListNotesAdapter() : RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
         holder.checkbox.isChecked = itemInList.isCompleted
         holder.checkbox.setOnCheckedChangeListener { _, isChecked ->
             itemInList.isCompleted = isChecked
-            onCheckBoxClick?.invoke(itemInList)
+            onCheckBoxClick?.invoke(itemInList,isChecked)
             // Notify item changed with payload to prevent rebinding and flashing.
             notifyItemChanged(position, itemInList)
         }

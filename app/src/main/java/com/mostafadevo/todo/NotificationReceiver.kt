@@ -8,7 +8,7 @@ import android.content.Intent
 import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.getSystemService
+import com.mostafadevo.todo.presentation.MainActivity
 
 class NotificationReceiver : BroadcastReceiver() {
 

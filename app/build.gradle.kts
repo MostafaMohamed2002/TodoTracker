@@ -8,6 +8,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("/home/mostafadevo/Documents/keystores/todo_tracker_keystore.jks")
+            storePassword = "53463562"
+            keyAlias = "key0"
+            keyPassword = "53463562"
+        }
+    }
     namespace = "com.mostafadevo.todo"
     compileSdk = 34
 
@@ -19,6 +27,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("debug")
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -70,6 +79,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.appcheck.playintegrity)
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")

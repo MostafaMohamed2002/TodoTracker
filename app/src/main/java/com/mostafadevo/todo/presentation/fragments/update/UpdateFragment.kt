@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.fragments.update
+package com.mostafadevo.todo.presentation.fragments.update
 
 import android.os.Build
 import android.os.Bundle
@@ -18,7 +18,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
 import com.mostafadevo.todo.data.model.Todo
-import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
+import com.mostafadevo.todo.presentation.SharedTodoViewModel
 import com.mostafadevo.todo.databinding.FragmentUpdateBinding
 import java.util.Calendar
 import java.util.Date

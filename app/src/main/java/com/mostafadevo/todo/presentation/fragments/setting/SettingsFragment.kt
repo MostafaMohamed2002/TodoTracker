@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.fragments.profile
+package com.mostafadevo.todo.presentation.fragments.setting
 
 import android.app.Activity
 import android.content.Intent
@@ -9,13 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.mostafadevo.todo.R
 import com.mostafadevo.todo.Utils
-import com.mostafadevo.todo.data.viewmodel.SettingsViewModel
 import com.mostafadevo.todo.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -25,6 +25,7 @@ class SettingsFragment : Fragment() {
     private val sharedPreferences by lazy {
         requireActivity().getSharedPreferences(Utils.SHARED_PREF_NAME, Activity.MODE_PRIVATE)
     }
+    private var isEditMode: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,14 +42,83 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUserNameandEmailandLoadImage()
+        handleEditSettings()
         setupPushUpdatesToFirestore()
         setupCloneCloudTodos()
-        handleBackButton()
         handleSwitchButtonForFirebaseSync()
+        handleBackButton()
+    }
+
+    private fun handleEditSettings() {
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                    val data = result.data
+                    val picUri = data?.data
+                    mSettingsViewModel.uploadImageToFirebase(picUri)
+                }
+            }
+        binding.toolbar.setOnMenuItemClickListener {
+            Log.d("SettingsFragment", "menu item clicked ${it.itemId}")
+            when (it.itemId) {
+                R.id.edit_settings -> {
+                    if (!isEditMode)/*is in edit mode*/ {
+                        binding.usernameTextinput.editText?.isEnabled = true
+                        //hide dividers
+                        binding.useremailTextinput.visibility=View.GONE
+                        binding.divider.visibility = View.GONE
+                        binding.divider2.visibility = View.GONE
+                        binding.divider3.visibility = View.GONE
+                        //hide other buttons
+                        binding.pushUpdatesButton.visibility = View.GONE
+                        binding.getUpdates.visibility = View.GONE
+                        binding.enableSyncingSwitch.visibility = View.GONE
+                        it.setIcon(R.drawable.baseline_save_24)
+
+                    } else if (isEditMode) {
+                        binding.usernameTextinput.editText?.isEnabled = false
+                        //hide dividers
+                        binding.useremailTextinput.visibility=View.VISIBLE
+                        binding.divider.visibility = View.VISIBLE
+                        binding.divider2.visibility = View.VISIBLE
+                        binding.divider3.visibility = View.VISIBLE
+                        //hide other buttons
+                        binding.pushUpdatesButton.visibility = View.VISIBLE
+                        binding.getUpdates.visibility = View.VISIBLE
+                        binding.enableSyncingSwitch.visibility = View.VISIBLE
+                        it.setIcon(R.drawable.baseline_edit_24)
+                        mSettingsViewModel.updateUserName(binding.usernameTextinput.editText?.text.toString())
+                        mSettingsViewModel.getUserImageUrl()
+                        mSettingsViewModel.getUserName()
+                        mSettingsViewModel.getUserImageUrl()
+                    } else {
+
+                    }
+                    isEditMode = !isEditMode
+                    Log.d("SettingsFragment", "isEditMode is $isEditMode")
+
+                }
+
+                else -> {
+
+                }
+            }
+            true
+        }
+            binding.userImageview.setOnClickListener {
+                if (isEditMode){
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    resultLauncher.launch(intent)
+                }
+            }
+
+
     }
 
     private fun handleSwitchButtonForFirebaseSync() {
-        binding.enableSyncingSwitch.isChecked = sharedPreferences.getBoolean(Utils.FIREBASE_SYNC_ENABLED, false)
+        binding.enableSyncingSwitch.isChecked =
+            sharedPreferences.getBoolean(Utils.FIREBASE_SYNC_ENABLED, false)
         binding.enableSyncingSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             sharedPreferences.edit().apply {
                 putBoolean(Utils.FIREBASE_SYNC_ENABLED, isChecked)
@@ -105,7 +175,11 @@ class SettingsFragment : Fragment() {
 
     private fun getThemePrimaryColor(): Int {
         val typedValue = TypedValue()
-        requireContext().theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+        requireContext().theme.resolveAttribute(
+            com.google.android.material.R.attr.colorPrimary,
+            typedValue,
+            true
+        )
         return typedValue.data
     }
 

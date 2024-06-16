@@ -5,135 +5,12 @@
     android:id="@+id/list_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.list.listFragment">
+    tools:context=".presentation.fragments.list.listFragment">
 
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:scrollbars="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        tools:listitem="@layout/row_item_note" >
 
-        <ImageView
-            android:id="@+id/user_imageview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:cropToPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/baseline_person_pin_24" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username_textinput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_imageview">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="User Name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/useremail_textinput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/username_textinput"
-            app:layout_constraintStart_toStartOf="@+id/username_textinput"
-            app:layout_constraintTop_toBottomOf="@+id/username_textinput">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="User Email" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="@+id/useremail_textinput"
-            app:layout_constraintStart_toStartOf="@+id/useremail_textinput"
-            app:layout_constraintTop_toBottomOf="@+id/useremail_textinput" />
-
-        <Button
-            android:id="@+id/push_updates_button"
-            app:strokeColor="?attr/colorPrimary"
-            app:strokeWidth="2dp"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Push Updates"
-            app:layout_constraintEnd_toEndOf="@+id/divider"
-            app:layout_constraintStart_toStartOf="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="@+id/push_updates_button"
-            app:layout_constraintStart_toStartOf="@+id/push_updates_button"
-            app:layout_constraintTop_toBottomOf="@+id/push_updates_button" />
-
-        <Button
-            android:id="@+id/get_updates"
-            style="@style/Widget.Material3.Button.TextButton"
-            app:strokeColor="?attr/colorPrimary"
-            app:strokeWidth="2dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Clone Updates"
-            app:layout_constraintEnd_toEndOf="@+id/divider2"
-            app:layout_constraintStart_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="@+id/get_updates"
-            app:layout_constraintStart_toStartOf="@+id/get_updates"
-            app:layout_constraintTop_toBottomOf="@+id/get_updates" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/enable_syncing_switch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Enable Midnight Syncing"
-            app:layout_constraintEnd_toEndOf="@+id/divider3"
-            app:layout_constraintStart_toStartOf="@+id/divider3"
-            app:layout_constraintTop_toBottomOf="@+id/divider3" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/list_app_bar_layout"
@@ -148,20 +25,154 @@
             app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             android:layout_height="?attr/collapsingToolbarLayoutMediumSize">
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:contentScrim="?android:attr/colorPrimary"
                 android:elevation="0dp"
                 android:paddingStart="4dp"
                 android:paddingEnd="8dp"
+                app:contentScrim="?android:attr/colorPrimary"
+                app:layout_collapseMode="pin"
+                app:menu="@menu/settings_menu"
                 app:navigationIcon="@drawable/baseline_navigate_before_24"
                 app:navigationIconTint="?attr/colorOnPrimaryContainer"
                 app:title="Settings" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <!-- Note: A RecyclerView can also be used -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Scrollable content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@layout/row_item_note" >
+
+            <ImageView
+                android:id="@+id/user_imageview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:cropToPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/baseline_person_pin_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_textinput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_imageview">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="User Name" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/useremail_textinput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/username_textinput"
+                app:layout_constraintStart_toStartOf="@+id/username_textinput"
+                app:layout_constraintTop_toBottomOf="@+id/username_textinput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="User Email" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/useremail_textinput"
+                app:layout_constraintStart_toStartOf="@+id/useremail_textinput"
+                app:layout_constraintTop_toBottomOf="@+id/useremail_textinput" />
+
+            <Button
+                android:id="@+id/push_updates_button"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="2dp"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Push Updates"
+                app:layout_constraintEnd_toEndOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/push_updates_button"
+                app:layout_constraintStart_toStartOf="@+id/push_updates_button"
+                app:layout_constraintTop_toBottomOf="@+id/push_updates_button" />
+
+            <Button
+                android:id="@+id/get_updates"
+                style="@style/Widget.Material3.Button.TextButton"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="2dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Clone Updates"
+                app:layout_constraintEnd_toEndOf="@+id/divider2"
+                app:layout_constraintStart_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@+id/get_updates"
+                app:layout_constraintStart_toStartOf="@+id/get_updates"
+                app:layout_constraintTop_toBottomOf="@+id/get_updates" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/enable_syncing_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Enable Midnight Syncing"
+                app:layout_constraintEnd_toEndOf="@+id/divider3"
+                app:layout_constraintStart_toStartOf="@+id/divider3"
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

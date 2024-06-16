@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.view.fragments.list
+package com.mostafadevo.todo.presentation.fragments.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.RadioGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mostafadevo.todo.R
-import com.mostafadevo.todo.data.viewmodel.SharedTodoViewModel
+import com.mostafadevo.todo.presentation.SharedTodoViewModel
 
 class SortBottomSheetFragment : BottomSheetDialogFragment() {
     private val mSharedTodoViewModel: SharedTodoViewModel by activityViewModels()

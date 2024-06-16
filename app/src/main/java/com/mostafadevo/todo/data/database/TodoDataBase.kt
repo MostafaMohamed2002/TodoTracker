@@ -1,4 +1,4 @@
-package com.mostafadevo.todo.data
+package com.mostafadevo.todo.data.database
 
 import android.content.Context
 import androidx.room.AutoMigration
