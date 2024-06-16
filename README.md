@@ -13,41 +13,42 @@ Todo Tracker is a robust Android application designed to help users effortlessly
 
 ## Project File Structure
 ```bash
-📁 todo
-    📁 data
-        📁 model
-            📄 Priority.kt
-            📄 Todo.kt
-        📁 repo
-            📄 ProfileRepository.kt
-            📄 TodoRepository.kt
-        📁 viewmodel
-            📄 LoginViewModel.kt
-            📄 SettingsViewModel.kt
-            📄 SharedTodoViewModel.kt
-            📄 SignUpViewModel.kt
-        📄 TodoDAO.kt
-        📄 TodoDataBase.kt
-        📄 TypeConverters.kt
-    📁 view
-        📁 fragments
-            📁 add
-                📄 AddFragment.kt
-            📁 list
-                📄 BottomSheetDialogFragment.kt
-                📄 ListFragment.kt
-                📄 ListNotesAdapter.kt
-            📁 profile
-                📄 SettingsFragment.kt
-            📁 update
-                📄 UpdateFragment.kt
-        📁 login
-            📄 LoginActivity.kt
-        📁 signup
-            📄 SignUpActivity.kt
-    📄 Application.kt
-    📄 MainActivity.kt
-    📄 Utils.kt
+├── 📁 data/
+│   ├── 📁 database/
+│   │   ├── 📄 TodoDAO.kt
+│   │   ├── 📄 TodoDataBase.kt
+│   │   └── 📄 📁ypeConverters.kt
+│   ├── 📁 model/
+│   │   ├── 📄 Priority.kt
+│   │   └── 📄 Todo.kt
+│   └── 📁 repo/
+│       └── 📄 TodoRepository.kt
+├── 📁 presentation/
+│   ├── 📁 fragments/
+│   │   ├── 📁 add/
+│   │   │   └── 📄 AddFragment.kt
+│   │   ├── 📁 list/
+│   │   │   ├── 📄 BottomSheetDialogFragment.kt
+│   │   │   ├── 📄 ListFragment.kt
+│   │   │   └── 📄 ListNotesAdapter.kt
+│   │   ├── 📁 setting/
+│   │   │   ├── 📄 SettingsFragment.kt
+│   │   │   └── 📄 SettingsViewModel.kt
+│   │   └── 📁 update/
+│   │       └── 📄 UpdateFragment.kt
+│   ├── 📁 login/
+│   │   ├── 📄 LoginActivity.kt
+│   │   └── 📄 LoginViewModel.kt
+│   ├── 📁 signup/
+│   │   ├── 📄 SignUpActivity.kt
+│   │   └── 📄 SignUpViewModel.kt
+│   ├── 📄 MainActivity.kt
+│   └── 📄 SharedTodoViewModel.kt
+├── 📄 Application.kt
+├── 📄 FirebaseSyncService.kt
+├── 📄 NotificationReceiver.kt
+├── 📄 out.txt
+└── 📄 Utils.kt
 ```
 ## Features
 - **Task Prioritization:** Assign priority levels (High, Medium, Low) to tasks to manage your day effectively.
