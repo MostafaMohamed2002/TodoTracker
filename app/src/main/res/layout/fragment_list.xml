@@ -5,7 +5,7 @@
     android:id="@+id/list_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.list.listFragment">
+    tools:context=".presentation.fragments.list.listFragment">
 
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
@@ -20,6 +20,7 @@
         android:layout_marginBottom="100dp"
         android:alpha="0.5"
         android:src="@drawable/baseline_inbox_24"
+        android:tint="?android:colorPrimary"
         android:visibility="gone" />
 
     <TextView
@@ -59,23 +60,28 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/list_app_bar_layout"
         android:layout_width="match_parent"
+        android:stateListAnimator="@null"
         android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/collapsingToolbarLayoutLargeStyle"
+            android:layout_width="match_parent"
+            app:collapsedTitleTextAppearance="@style/CollapsedAppBarTextAppearance"
+            app:expandedTitleTextAppearance="@style/ExpandedAppBarTextAppearance"
+            app:expandedTitleMarginStart="24dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            android:layout_height="?attr/collapsingToolbarLayoutMediumSize">
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="enterAlways|snap">
-
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/searchbar_hint"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:contentScrim="?android:attr/colorPrimary"
+            android:elevation="0dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp"
+            app:menu="@menu/home_menu"
+            app:title="@string/app_name" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -84,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="@string/searchbar_hint"
-        app:layout_anchor="@id/search_bar">
+        >
         <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecyclerView"

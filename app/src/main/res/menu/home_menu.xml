@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_icon"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_search_24"
+        app:iconTint="?attr/colorOnPrimaryContainer"
+        android:title="Search"
+        android:visible="true"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/sort_by"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_sort_24"
+        app:iconTint="?attr/colorOnPrimaryContainer"
+        android:title="Sort"
+        android:visible="true"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/deleteall"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_pin_24"
+        android:title="Delete All"
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_pin_24"
+        android:title="Settings"
+        android:visible="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_pin_24"
+        android:title="Logout"
+        android:visible="true"
+        app:showAsAction="never" />
+</menu>

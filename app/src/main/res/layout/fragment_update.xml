@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="bottom | end"
-    tools:context=".view.fragments.update.updateFragment">
+    tools:context=".presentation.fragments.update.updateFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -30,13 +30,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".view.fragments.update.updateFragment">
+            tools:context=".presentation.fragments.update.updateFragment">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -88,8 +86,56 @@
                     android:hint="Description" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_duedate_inputlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                app:endIconDrawable="@drawable/baseline_date_range_24"
+                app:endIconMode="custom"
+                app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                app:layout_constraintStart_toStartOf="@+id/update_description_textinput"
+                app:layout_constraintTop_toBottomOf="@+id/update_description_textinput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Due Date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_duetime_inputlayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                app:endIconDrawable="@drawable/baseline_access_time_24"
+                app:endIconMode="custom"
+                app:layout_constraintBottom_toBottomOf="@+id/update_duedate_inputlayout"
+                app:layout_constraintEnd_toEndOf="@+id/update_description_textinput"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/update_duedate_inputlayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Due Date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     </androidx.core.widget.NestedScrollView>
 

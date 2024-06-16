@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.mostafadevo.todo.view.fragments.list.listFragment"
+        android:name="com.mostafadevo.todo.presentation.fragments.list.listFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.mostafadevo.todo.view.fragments.add.addFragment"
+        android:name="com.mostafadevo.todo.presentation.fragments.add.addFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.mostafadevo.todo.view.fragments.update.updateFragment"
+        android:name="com.mostafadevo.todo.presentation.fragments.update.updateFragment"
         android:label="fragment_update"
         tools:layout="@layout/fragment_update">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.mostafadevo.todo.view.fragments.profile.ProfileFragment"
+        android:name="com.mostafadevo.todo.presentation.fragments.setting.SettingsFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>
