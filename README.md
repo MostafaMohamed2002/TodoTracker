@@ -12,8 +12,7 @@
 Todo Tracker is a robust Android application designed to help users effortlessly manage their daily tasks. Developed with a focus on high usability and aesthetic design, Todo Tracker allows users to not just organize their tasks but also do it with style and efficiency.
 </br>
 
-![Untitled video - Made with Clipchamp](https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/dcd12c29-055e-444a-b264-21b7cca65664)
-
+https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/5dcb34d6-ca6e-4d55-9786-0ed0b738bfad
 
 ## Project File Structure
 ```bash
