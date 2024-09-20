@@ -2,7 +2,6 @@
 
 ## Table of Contents
 - [Overview](#overview)
-- [Project File Structure](#project-file-structure)
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Usage](#usage)
@@ -15,45 +14,6 @@ Todo Tracker is a robust Android application designed to help users effortlessly
 
 https://github.com/MostafaMohamed2002/TodoTracker/assets/41519636/5dcb34d6-ca6e-4d55-9786-0ed0b738bfad
 
-## Project File Structure
-```bash
-├── 📁 data/
-│   ├── 📁 database/
-│   │   ├── 📄 TodoDAO.kt
-│   │   ├── 📄 TodoDataBase.kt
-│   │   └── 📄 📁ypeConverters.kt
-│   ├── 📁 model/
-│   │   ├── 📄 Priority.kt
-│   │   └── 📄 Todo.kt
-│   └── 📁 repo/
-│       └── 📄 TodoRepository.kt
-├── 📁 presentation/
-│   ├── 📁 fragments/
-│   │   ├── 📁 add/
-│   │   │   └── 📄 AddFragment.kt
-│   │   ├── 📁 list/
-│   │   │   ├── 📄 BottomSheetDialogFragment.kt
-│   │   │   ├── 📄 ListFragment.kt
-│   │   │   └── 📄 ListNotesAdapter.kt
-│   │   ├── 📁 setting/
-│   │   │   ├── 📄 SettingsFragment.kt
-│   │   │   └── 📄 SettingsViewModel.kt
-│   │   └── 📁 update/
-│   │       └── 📄 UpdateFragment.kt
-│   ├── 📁 login/
-│   │   ├── 📄 LoginActivity.kt
-│   │   └── 📄 LoginViewModel.kt
-│   ├── 📁 signup/
-│   │   ├── 📄 SignUpActivity.kt
-│   │   └── 📄 SignUpViewModel.kt
-│   ├── 📄 MainActivity.kt
-│   └── 📄 SharedTodoViewModel.kt
-├── 📄 Application.kt
-├── 📄 FirebaseSyncService.kt
-├── 📄 NotificationReceiver.kt
-├── 📄 out.txt
-└── 📄 Utils.kt
-```
 ## Features
 - **Task Prioritization:** Assign priority levels (High, Medium, Low) to tasks to manage your day effectively.
 - **Custom Categories:** Organize tasks into custom categories for better organization.
